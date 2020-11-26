@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kb_mobile_app/models/clo_referral_event.dart';
 import 'package:kb_mobile_app/models/events.dart';
@@ -20,7 +19,8 @@ class CLOReferralCardBodySummary extends StatefulWidget {
       _CLOReferralCardBodySummaryState();
 }
 
-class _CLOReferralCardBodySummaryState extends State<CLOReferralCardBodySummary> {
+class _CLOReferralCardBodySummaryState
+    extends State<CLOReferralCardBodySummary> {
   CLOReferralEvent ovcCLOReferralCard;
 
   @override
@@ -43,7 +43,7 @@ class _CLOReferralCardBodySummaryState extends State<CLOReferralCardBodySummary>
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                      flex: 2,
+                    flex: 2,
                     child: Text(
                       'Date',
                       style: TextStyle().copyWith(
@@ -71,7 +71,7 @@ class _CLOReferralCardBodySummaryState extends State<CLOReferralCardBodySummary>
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                      flex: 2,
+                    flex: 2,
                     child: Text(
                       'Referral for',
                       style: TextStyle().copyWith(
@@ -127,14 +127,14 @@ class _CLOReferralCardBodySummaryState extends State<CLOReferralCardBodySummary>
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 2,
+                      flex: 2,
                       child: Text(
-                    'Community Partner',
-                    style: TextStyle().copyWith(
-                        fontSize: 14.0,
-                        color: widget.labelColor,
-                        fontWeight: FontWeight.w500),
-                  )),
+                        'Community Partner',
+                        style: TextStyle().copyWith(
+                            fontSize: 14.0,
+                            color: widget.labelColor,
+                            fontWeight: FontWeight.w500),
+                      )),
                   Expanded(
                     flex: 2,
                     child: Text(
@@ -148,7 +148,6 @@ class _CLOReferralCardBodySummaryState extends State<CLOReferralCardBodySummary>
                 ],
               ),
             ),
-           
           ],
         ),
       ),

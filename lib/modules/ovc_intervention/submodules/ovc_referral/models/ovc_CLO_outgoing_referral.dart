@@ -1,10 +1,9 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:kb_mobile_app/models/form_section.dart';
 import 'package:kb_mobile_app/models/input_field.dart';
 import 'package:kb_mobile_app/models/input_field_option.dart';
 
-class OvcCLOOutgoingReferral {
+class OvcCloOutgoingReferral {
   static List<FormSection> getFormSections() {
     return [
       FormSection(
@@ -19,17 +18,17 @@ class OvcCLOOutgoingReferral {
               labelColor: Color(0xFF737373),
             ),
             InputField(
-              id: 'Cwg16RorxzK',
-              name: 'Multi-Month Despensing (MMD)',
-              valueType: 'TEXT',
-              inputColor: Color(0xFF4B9F46),
-              labelColor: Color(0xFF737373)),
+                id: 'Cwg16RorxzK',
+                name: 'Multi-Month Despensing (MMD)',
+                valueType: 'TEXT',
+                inputColor: Color(0xFF4B9F46),
+                labelColor: Color(0xFF737373)),
             InputField(
-              id: 'vEeBBzeQrQU',
-              name: 'Referred to (Name and Surname of Community Cadre)',
-              valueType: 'TEXT',
-              inputColor: Color(0xFF4B9F46),
-              labelColor: Color(0xFF737373)),
+                id: 'vEeBBzeQrQU',
+                name: 'Referred to (Name and Surname of Community Cadre)',
+                valueType: 'TEXT',
+                inputColor: Color(0xFF4B9F46),
+                labelColor: Color(0xFF737373)),
             InputField(
                 id: 'RiNop7mvTRW',
                 name: 'Community Partner',
@@ -46,12 +45,12 @@ class OvcCLOOutgoingReferral {
                   InputFieldOption(code: 'SWAALES', name: 'SWAALES'),
                 ]),
             InputField(
-              id: 'OIUDljKyNgy',
-              name: 'Date of referral',
-              valueType: 'DATE',
-              inputColor: Color(0xFF4B9F46),
-              labelColor: Color(0xFF737373)),
-           InputField(
+                id: 'OIUDljKyNgy',
+                name: 'Date of referral',
+                valueType: 'DATE',
+                inputColor: Color(0xFF4B9F46),
+                labelColor: Color(0xFF737373)),
+            InputField(
                 id: 'pdUklLmaauR',
                 name: 'Outcome Status',
                 valueType: 'TEXT',

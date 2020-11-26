@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:kb_mobile_app/models/form_section.dart';
 import 'package:kb_mobile_app/models/input_field.dart';
 import 'package:kb_mobile_app/models/input_field_option.dart';
@@ -19,11 +18,11 @@ class OvcCLOReceivedReferral {
               labelColor: Color(0xFF737373),
             ),
             InputField(
-              id: 'BelCZxo1ge9',
-              name: 'Date of Service',
-              valueType: 'DATE',
-              inputColor: Color(0xFF4B9F46),
-              labelColor: Color(0xFF737373)),
+                id: 'BelCZxo1ge9',
+                name: 'Date of Service',
+                valueType: 'DATE',
+                inputColor: Color(0xFF4B9F46),
+                labelColor: Color(0xFF737373)),
             InputField(
                 id: 'NbQGlx6QZpK',
                 name: 'Referred by',
@@ -64,17 +63,19 @@ class OvcCLOReceivedReferral {
                   InputFieldOption(code: 'ART', name: 'ART'),
                   InputFieldOption(code: 'SAB', name: 'SAB'),
                   InputFieldOption(code: 'Parenting', name: 'Parenting'),
-                  InputFieldOption(code: 'Stepping Stone', name: 'Stepping Stone'),
+                  InputFieldOption(
+                      code: 'Stepping Stone', name: 'Stepping Stone'),
                   InputFieldOption(code: 'VAC', name: 'VAC'),
-                  InputFieldOption(code: 'Singing to the Lion', name: 'Singing to the Lion'),
+                  InputFieldOption(
+                      code: 'Singing to the Lion', name: 'Singing to the Lion'),
                   InputFieldOption(code: 'Other', name: 'Other')
                 ]),
             InputField(
-              id: 'pdUklLmaauR',
-              name: 'Outcome Status',
-              valueType: 'TEXT',
-              inputColor: Color(0xFF4B9F46),
-              labelColor: Color(0xFF737373))
+                id: 'pdUklLmaauR',
+                name: 'Outcome Status',
+                valueType: 'TEXT',
+                inputColor: Color(0xFF4B9F46),
+                labelColor: Color(0xFF737373))
           ])
     ];
   }

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_event_data_state.dart';
@@ -77,7 +75,8 @@ class _DreamsHTSIndexCardBottonContentState
         ));
   }
 
-  void onFolloUpIndexContact(BuildContext context, IndexContactModel eventData) {
+  void onFolloUpIndexContact(
+      BuildContext context, IndexContactModel eventData) {
     updateFormState(context, true, eventData);
     Navigator.push(
         context,
@@ -209,7 +208,7 @@ class _DreamsHTSIndexCardBottonContentState
                                             ),
                                           ))),
                                 ),
-                                 Visibility(
+                                Visibility(
                                   //visible: canFollowUpChilddInfo,
                                   child: Container(
                                       margin: EdgeInsets.only(left: 10.0),
