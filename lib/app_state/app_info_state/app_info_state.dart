@@ -21,10 +21,6 @@ class AppInfoState with ChangeNotifier {
     } catch (e) {
       print(e.toString());
     }
-    print(_currentAppId);
-    print(_currentAppVersion);
-    print(_currentAppName);
-    print(_currentPlatformVersion);
     notifyListeners();
   }
 }
