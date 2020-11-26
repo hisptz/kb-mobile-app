@@ -16,7 +16,7 @@ class OvcChildInfoTopHeader extends StatelessWidget {
             ovcHouseHoldCurrentSelectionState.currentOvcHouseHoldChild;
         var currentOvcHouseHold =
             ovcHouseHoldCurrentSelectionState.currentOvcHouseHold;
-        
+
         return Material(
           type: MaterialType.card,
           elevation: 1.0,
@@ -69,6 +69,7 @@ class OvcChildInfoTopHeader extends StatelessWidget {
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child: RichText(
@@ -104,6 +105,28 @@ class OvcChildInfoTopHeader extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                       text: currentOvcHouseHoldChild.age,
+                                      style: TextStyle().copyWith(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF4B9F46),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'HIV  ',
+                                  style: TextStyle().copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF92A791),
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: currentOvcHouseHoldChild.hivStatus,
                                       style: TextStyle().copyWith(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w500,
