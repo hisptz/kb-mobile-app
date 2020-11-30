@@ -84,7 +84,7 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
   }
 
   void onReferralSelection(BuildContext context) {
-     setState(() {
+    setState(() {
       isCloReferralSelected = false;
     });
   }
@@ -138,16 +138,21 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
                                   )
                                 : Column(
                                     children: [
-                                      OvcReferralTopBarSelection(
-                                        isClicked: isCloReferralSelected,
-                                        onSelectCLOReferral: () =>
-                                            onCLOReferralSelection(context),
-                                        onSelectReferral: () =>
-                                            onReferralSelection(context),
-                                      ),
-                                   isCloReferralSelected
-                                          ? OvcChildCLOReferral()
-                                          : OvcChildReferral()
+                                      Container(
+                                        child: Text(
+                                          'CLO & Normal Referral container',
+                                        ),
+                                      )
+                                      //     OvcReferralTopBarSelection(
+                                      //       isClicked: isCloReferralSelected,
+                                      //       onSelectCLOReferral: () =>
+                                      //           onCLOReferralSelection(context),
+                                      //       onSelectReferral: () =>
+                                      //           onReferralSelection(context),
+                                      //     ),
+                                      //  isCloReferralSelected
+                                      //         ? OvcChildCLOReferral()
+                                      //         : OvcChildReferral()
                                     ],
                                   ),
                           )
@@ -163,4 +168,3 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
         bottomNavigationBar: InterventionBottomNavigationBarContainer());
   }
 }
-
