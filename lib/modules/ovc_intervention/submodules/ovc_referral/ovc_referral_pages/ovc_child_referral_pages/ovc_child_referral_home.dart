@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kb_mobile_app/app_state/current_user_state/current_user_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/ovc_house_hold_current_selection_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_event_data_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_form_state.dart';
 import 'package:kb_mobile_app/app_state/intervention_card_state/intervention_card_state.dart';
 import 'package:kb_mobile_app/core/components/Intervention_bottom_navigation_bar_container.dart';
 import 'package:kb_mobile_app/core/components/circular_process_loader.dart';
+import 'package:kb_mobile_app/core/components/referrals/referral_tabs_container.dart';
 import 'package:kb_mobile_app/core/components/sub_page_app_bar.dart';
 import 'package:kb_mobile_app/core/components/sup_page_body.dart';
 import 'package:kb_mobile_app/models/events.dart';
@@ -95,76 +97,84 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
     int referralIndex,
   ) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OvcChildReferralManage(
-                  eventData: eventData,
-                  referralIndex: referralIndex,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => OvcChildReferralManage(
+          eventData: eventData,
+          referralIndex: referralIndex,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
-          child: Consumer<IntervetionCardState>(
-            builder: (context, intervetionCardState, child) {
-              InterventionCard activeInterventionProgram =
-                  intervetionCardState.currentIntervetionProgram;
-              return SubPageAppBar(
-                label: label,
-                activeInterventionProgram: activeInterventionProgram,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(65.0),
+        child: Consumer<IntervetionCardState>(
+          builder: (context, intervetionCardState, child) {
+            InterventionCard activeInterventionProgram =
+                intervetionCardState.currentIntervetionProgram;
+            return SubPageAppBar(
+              label: label,
+              activeInterventionProgram: activeInterventionProgram,
+            );
+          },
+        ),
+      ),
+      body: SubPageBody(
+        body: Container(
+          child: Consumer<CurrentUserState>(
+            builder: (context, currentUserState, child) {
+              return Consumer<OvcHouseHoldCurrentSelectionState>(
+                builder: (context, ovcHouseHoldCurrentSelectionState, child) {
+                  return Consumer<ServiveEventDataState>(
+                    builder: (context, serviceFormState, child) {
+                      bool isLoading = serviceFormState.isLoading;
+                      return Container(
+                        child: Column(
+                          children: [
+                            OvcChildInfoTopHeader(),
+                            Container(
+                              child: isLoading
+                                  ? Container(
+                                      child: Center(
+                                        child: CircularProcessLoader(
+                                          color: Colors.blueGrey,
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      child:
+                                          currentUserState.canManageCLOReferral
+                                              ? ReferralTabsContainer()
+                                              : OvcChildReferral(),
+                                    ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
               );
             },
           ),
         ),
-        body: SubPageBody(
-          body: Container(
-            child: Consumer<OvcHouseHoldCurrentSelectionState>(
-              builder: (context, ovcHouseHoldCurrentSelectionState, child) {
-                return Consumer<ServiveEventDataState>(
-                  builder: (context, serviceFormState, child) {
-                    bool isLoading = serviceFormState.isLoading;
-
-                    return Container(
-                      child: Column(
-                        children: [
-                          OvcChildInfoTopHeader(),
-                          Container(
-                            child: isLoading
-                                ? CircularProcessLoader(
-                                    color: Colors.blueGrey,
-                                  )
-                                : Column(
-                                    children: [
-                                      Container(
-                                        child: Text(
-                                          'CLO & Normal Referral container',
-                                        ),
-                                      )
-                                      //     OvcReferralTopBarSelection(
-                                      //       isClicked: isCloReferralSelected,
-                                      //       onSelectCLOReferral: () =>
-                                      //           onCLOReferralSelection(context),
-                                      //       onSelectReferral: () =>
-                                      //           onReferralSelection(context),
-                                      //     ),
-                                      //  isCloReferralSelected
-                                      //         ? OvcChildCLOReferral()
-                                      //         : OvcChildReferral()
-                                    ],
-                                  ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-        bottomNavigationBar: InterventionBottomNavigationBarContainer());
+      ),
+      bottomNavigationBar: InterventionBottomNavigationBarContainer(),
+    );
   }
 }
+
+//     OvcReferralTopBarSelection(
+//       isClicked: isCloReferralSelected,
+//       onSelectCLOReferral: () =>
+//           onCLOReferralSelection(context),
+//       onSelectReferral: () =>
+//           onReferralSelection(context),
+//     ),
+//  isCloReferralSelected
+//         ? OvcChildCLOReferral()
+//         :OvcChildReferral()
