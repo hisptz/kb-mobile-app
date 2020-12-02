@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kb_mobile_app/app_state/dreams_intervention_list_state/dream_current_selection_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_form_state.dart';
 import 'package:kb_mobile_app/app_state/intervention_card_state/intervention_card_state.dart';
@@ -8,6 +9,7 @@ import 'package:kb_mobile_app/core/components/circular_process_loader.dart';
 import 'package:kb_mobile_app/core/components/entry_forms/entry_form_container.dart';
 import 'package:kb_mobile_app/core/components/sub_page_app_bar.dart';
 import 'package:kb_mobile_app/core/components/sup_page_body.dart';
+import 'package:kb_mobile_app/core/utils/app_util.dart';
 import 'package:kb_mobile_app/models/agyw_dream.dart';
 import 'package:kb_mobile_app/models/form_section.dart';
 import 'package:kb_mobile_app/models/intervention_card.dart';
@@ -18,7 +20,9 @@ import 'package:provider/provider.dart';
 import 'agyw_dreams_hts_client_information.dart';
 
 class AgywDreamsHTSConsentForm extends StatefulWidget {
-  AgywDreamsHTSConsentForm({Key key}) : super(key: key);
+  AgywDreamsHTSConsentForm({Key key, this.isComingFromPrep}) : super(key: key);
+
+  final bool isComingFromPrep;
 
   @override
   _AgywDreamsHTSConsentFormState createState() =>
@@ -30,10 +34,12 @@ class _AgywDreamsHTSConsentFormState extends State<AgywDreamsHTSConsentForm> {
   List<FormSection> formSections;
   bool isFormReady = false;
   bool isSaving = false;
+  bool isComingFromPrep;
 
   @override
   void initState() {
     super.initState();
+    isComingFromPrep = widget.isComingFromPrep;
     formSections = HTSConsent.getFormSections();
     Timer(Duration(seconds: 1), () {
       setState(() {
@@ -47,13 +53,36 @@ class _AgywDreamsHTSConsentFormState extends State<AgywDreamsHTSConsentForm> {
         .setFormFieldState(id, value);
   }
 
+  bool isConsentGiven(Map dataObject) {
+    List<String> consentFields = [
+      'rguXA70zATn',
+      'TcN49hQNZiG',
+      'HZ4BrWoGNIO',
+      'Gl7NGINbUAV',
+      'yVYVJe26S4u',
+      'B4xx1IVaAnI',
+      'rY4ei8RNw6c'
+    ];
+
+    return !consentFields.every((field) =>
+        '${dataObject[field]}' == 'false' || '${dataObject[field]}' == 'null');
+  }
+
   void onSaveForm(BuildContext context, Map dataObject, AgywDream agywDream) {
     Provider.of<DreamBenefeciarySelectionState>(context, listen: false)
         .setCurrentAgywDream(agywDream);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AgywDreamsHTSClientInformation()));
+    if (isConsentGiven(dataObject)) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AgywDreamsHTSClientInformation(
+                    isComingFromPrep: isComingFromPrep,
+                  )));
+    } else {
+      AppUtil.showToastMessage(
+          message: 'Cannot proceed without consent',
+          position: ToastGravity.TOP);
+    }
   }
 
   @override

@@ -16,21 +16,22 @@ import 'package:kb_mobile_app/models/agyw_dream.dart';
 import 'package:kb_mobile_app/models/form_section.dart';
 import 'package:kb_mobile_app/models/intervention_card.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_beneficiary_top_header.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/dreams_service_lbse_form_info.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/lbse/constants/lbse_constant.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/lbse/skip_logics/agyw_dreams_lbse_skip_logic.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/dreams_srh_register.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/srh/constants/srh_client_intake_constant.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/srh/skip_logics/agyw_dreams_srh_register_skip_logic.dart';
 import 'package:kb_mobile_app/modules/ovc_intervention/components/ovc_enrollment_form_save_button.dart';
 import 'package:provider/provider.dart';
 
-class AgywDreamsLBSEForm extends StatefulWidget {
-  AgywDreamsLBSEForm({Key key}) : super(key: key);
+class AgywDreamsSrhRegisterForm extends StatefulWidget {
+  AgywDreamsSrhRegisterForm({Key key}) : super(key: key);
 
   @override
-  _AgywDreamsLBSEFormState createState() => _AgywDreamsLBSEFormState();
+  _AgywDreamsSrhRegisterFormState createState() =>
+      _AgywDreamsSrhRegisterFormState();
 }
 
-class _AgywDreamsLBSEFormState extends State<AgywDreamsLBSEForm> {
-  final String label = 'LBSE  form';
+class _AgywDreamsSrhRegisterFormState extends State<AgywDreamsSrhRegisterForm> {
+  final String label = 'SRH Register';
   List<FormSection> formSections;
   bool isFormReady = false;
   bool isSaving = false;
@@ -38,7 +39,7 @@ class _AgywDreamsLBSEFormState extends State<AgywDreamsLBSEForm> {
   @override
   void initState() {
     super.initState();
-    formSections = DreamsLBSEInfo.getFormSections();
+    formSections = DreamsSrhRegister.getFormSections();
     Timer(Duration(seconds: 1), () {
       setState(() {
         isFormReady = true;
@@ -53,7 +54,7 @@ class _AgywDreamsLBSEFormState extends State<AgywDreamsLBSEForm> {
       () async {
         Map dataObject =
             Provider.of<ServiceFormState>(context, listen: false).formState;
-        await AgywDreamsLBSESkipLogic.evaluateSkipLogics(
+        await AgywDreamsSrhRegisterSkipLogic.evaluateSkipLogics(
           context,
           formSections,
           dataObject,
@@ -76,11 +77,12 @@ class _AgywDreamsLBSEFormState extends State<AgywDreamsLBSEForm> {
       });
       String eventDate = dataObject['eventDate'];
       String eventId = dataObject['eventId'];
+
       List<String> hiddenFields = [];
       try {
         await TrackedEntityInstanceUtil.savingTrackedEntityInstanceEventData(
-            LBSEConstant.program,
-            LBSEConstant.programStage,
+            HivPrepClientIntakeConstant.program,
+            HivPrepClientIntakeConstant.programStage,
             agywDream.orgUnit,
             formSections,
             dataObject,
@@ -95,7 +97,9 @@ class _AgywDreamsLBSEFormState extends State<AgywDreamsLBSEForm> {
             AppUtil.showToastMessage(
                 message: 'Form has been saved successfully',
                 position: ToastGravity.TOP);
-            Navigator.pop(context);
+            if (Navigator.canPop(context)) {
+              Navigator.popUntil(context, (route) => route.isFirst);
+            }
           });
         });
       } catch (e) {

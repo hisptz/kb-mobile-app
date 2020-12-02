@@ -16,21 +16,23 @@ import 'package:kb_mobile_app/models/agyw_dream.dart';
 import 'package:kb_mobile_app/models/form_section.dart';
 import 'package:kb_mobile_app/models/intervention_card.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_beneficiary_top_header.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/dreams_service_go_girls_form_info.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/go_girls/constants/go_girls_constant.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/go_girls/skip_logics/agyw_dreams_go_girls_skip_logic.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/hts_register.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/constants/agyw_dreams_hts_constant.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/skip_logics/agyw_dreams_hts_register_skip_logic.dart';
 import 'package:kb_mobile_app/modules/ovc_intervention/components/ovc_enrollment_form_save_button.dart';
 import 'package:provider/provider.dart';
 
-class AgywDreamsGoGirlsForm extends StatefulWidget {
-  AgywDreamsGoGirlsForm({Key key}) : super(key: key);
+class AgywDreamsHTSRegisterFormEdit extends StatefulWidget {
+  AgywDreamsHTSRegisterFormEdit({Key key}) : super(key: key);
 
   @override
-  _AgywDreamsGoGirlsFormState createState() => _AgywDreamsGoGirlsFormState();
+  _AgywDreamsHTSRegisterFormEditState createState() =>
+      _AgywDreamsHTSRegisterFormEditState();
 }
 
-class _AgywDreamsGoGirlsFormState extends State<AgywDreamsGoGirlsForm> {
-  final String label = 'Go Girls form';
+class _AgywDreamsHTSRegisterFormEditState
+    extends State<AgywDreamsHTSRegisterFormEdit> {
+  final String label = 'HTS Register';
   List<FormSection> formSections;
   bool isFormReady = false;
   bool isSaving = false;
@@ -38,7 +40,7 @@ class _AgywDreamsGoGirlsFormState extends State<AgywDreamsGoGirlsForm> {
   @override
   void initState() {
     super.initState();
-    formSections = DreamsGoGirlsInfo.getFormSections();
+    formSections = HTSRegister.getFormSections();
     Timer(Duration(seconds: 1), () {
       setState(() {
         isFormReady = true;
@@ -53,7 +55,7 @@ class _AgywDreamsGoGirlsFormState extends State<AgywDreamsGoGirlsForm> {
       () async {
         Map dataObject =
             Provider.of<ServiceFormState>(context, listen: false).formState;
-        await AgywDreamsGoGirlsSkipLogic.evaluateSkipLogics(
+        await AgywDreamsHTSRegisterSkipLogic.evaluateSkipLogics(
           context,
           formSections,
           dataObject,
@@ -76,11 +78,12 @@ class _AgywDreamsGoGirlsFormState extends State<AgywDreamsGoGirlsForm> {
       });
       String eventDate = dataObject['eventDate'];
       String eventId = dataObject['eventId'];
+      print(dataObject);
       List<String> hiddenFields = [];
       try {
         await TrackedEntityInstanceUtil.savingTrackedEntityInstanceEventData(
-            GoGirlsConstant.program,
-            GoGirlsConstant.programStage,
+            AgywDreamsHTSConstant.program,
+            AgywDreamsHTSConstant.programStage,
             agywDream.orgUnit,
             formSections,
             dataObject,

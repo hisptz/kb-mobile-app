@@ -13,13 +13,16 @@ import 'package:kb_mobile_app/models/form_section.dart';
 import 'package:kb_mobile_app/models/intervention_card.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_beneficiary_top_header.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/client_information.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/pages/agyw_dreams_hts_register.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/skip_logics/agyw_dreams_hts_skip_logic.dart';
 import 'package:kb_mobile_app/modules/ovc_intervention/components/ovc_enrollment_form_save_button.dart';
 import 'package:provider/provider.dart';
 import 'agyw_dreams_hts_consent_for_release_status.dart';
 
 class AgywDreamsHTSClientInformation extends StatefulWidget {
-  AgywDreamsHTSClientInformation({Key key}) : super(key: key);
+  AgywDreamsHTSClientInformation({Key key, this.isComingFromPrep})
+      : super(key: key);
+  final bool isComingFromPrep;
 
   @override
   _AgywDreamsHTSClientInformationState createState() =>
@@ -32,10 +35,12 @@ class _AgywDreamsHTSClientInformationState
   List<FormSection> formSections;
   bool isFormReady = false;
   bool isSaving = false;
+  bool isComingFromPrep;
 
   @override
   void initState() {
     super.initState();
+    isComingFromPrep = widget.isComingFromPrep;
     formSections = ClientInformation.getFormSections();
     Timer(Duration(seconds: 1), () {
       setState(() {
@@ -69,10 +74,8 @@ class _AgywDreamsHTSClientInformationState
   void onSaveForm(BuildContext context, Map dataObject, AgywDream agywDream) {
     Provider.of<DreamBenefeciarySelectionState>(context, listen: false)
         .setCurrentAgywDream(agywDream);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AgywDreamsHTSConsentForReleaseStatus()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => AgywDreamsHTSRegisterForm(isComingFromPrep: isComingFromPrep,)));
   }
 
   @override
@@ -119,6 +122,10 @@ class _AgywDreamsHTSClientInformationState
                                     ),
                                     child: EntryFormContainer(
                                       formSections: formSections,
+                                      hiddenFields:
+                                          serviceFormState.hiddenFields,
+                                      hiddenSections:
+                                          serviceFormState.hiddenSections,
                                       mandatoryFieldObject: Map(),
                                       isEditableMode:
                                           serviceFormState.isEditableMode,

@@ -11,37 +11,43 @@ import 'package:kb_mobile_app/core/utils/tracked_entity_instance_util.dart';
 import 'package:kb_mobile_app/models/agyw_dream.dart';
 import 'package:kb_mobile_app/models/events.dart';
 import 'package:kb_mobile_app/models/intervention_card.dart';
+import 'package:kb_mobile_app/models/service_event.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_beneficiary_top_header.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/components/prep_visit_card.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/go_girls/constants/go_girls_constant.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/go_girls/pages/agyw_dreams_go_girls_form.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/service_form/constants/service_form_constant.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/service_form/pages/agyw_dreams_service_form.dart';
 import 'package:kb_mobile_app/modules/ovc_intervention/components/ovc_enrollment_form_save_button.dart';
 import 'package:provider/provider.dart';
 
+class AgywDreamsServiceFormPage extends StatefulWidget {
+  AgywDreamsServiceFormPage({Key key}) : super(key: key);
 
-class AgywDreamGoGirls extends StatefulWidget {
-
-  AgywDreamGoGirls({Key key}) : super(key: key);
   @override
-  _AgywDreamGoGirlsState createState() => _AgywDreamGoGirlsState();
+  _AgywDreamsServiceFormPage createState() => _AgywDreamsServiceFormPage();
 }
 
-class _AgywDreamGoGirlsState extends State<AgywDreamGoGirls> {
-  final String label = 'Go Girls';
-  List<String> programStageids = [GoGirlsConstant.programStage];
+class _AgywDreamsServiceFormPage extends State<AgywDreamsServiceFormPage> {
+  final String label = 'Service Form';
+  List<String> programStageids = [ServiceFormConstant.programStage];
   @override
   void initState() {
     super.initState();
   }
 
   void updateFormState(
-    BuildContext context,
-    bool isEditableMode,
-    Events eventData,
-  ) {
+      BuildContext context,
+      bool isEditableMode,
+      Events eventData,
+      AgywDream agywDream,
+      List<ServiceEvents> serviceEvents) {
+    Map serviceEventSessions = aggregateServiceSessions(serviceEvents);
     Provider.of<ServiceFormState>(context, listen: false).resetFormState();
     Provider.of<ServiceFormState>(context, listen: false)
         .updateFormEditabilityState(isEditableMode: isEditableMode);
+    Provider.of<ServiceFormState>(context, listen: false)
+        .setFormFieldState('age', agywDream.age);
+    Provider.of<ServiceFormState>(context, listen: false)
+        .setFormFieldState('eventSessions', serviceEventSessions);
     if (eventData != null) {
       Provider.of<ServiceFormState>(context, listen: false)
           .setFormFieldState('eventDate', eventData.eventDate);
@@ -56,24 +62,40 @@ class _AgywDreamGoGirlsState extends State<AgywDreamGoGirls> {
     }
   }
 
-  void onAddPrep(BuildContext context, AgywDream agywDream) {
-    updateFormState(context, true, null);
+  Map aggregateServiceSessions(List<ServiceEvents> serviceEvents) {
+    Map aggregatedSession = Map();
+    for (ServiceEvents event in serviceEvents ?? []) {
+      if (aggregatedSession[event.interventionType] != null) {
+        aggregatedSession[event.interventionType] =
+            aggregatedSession[event.interventionType] + event.numberaOfSessions;
+      } else {
+        aggregatedSession[event.interventionType] = event.numberaOfSessions;
+      }
+    }
+    return aggregatedSession;
+  }
+
+  void onAddService(BuildContext context, AgywDream agywDream,
+      List<ServiceEvents> serviceEvents) {
+    updateFormState(context, true, null, agywDream, serviceEvents);
     Provider.of<DreamBenefeciarySelectionState>(context, listen: false)
         .setCurrentAgywDream(agywDream);
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AgywDreamsGoGirlsForm()));
+        MaterialPageRoute(builder: (context) => AgywDreamsServiceForm()));
   }
 
-  void onViewPrep(BuildContext context, Events eventdata) {
-    updateFormState(context, false, eventdata);
+  void onViewService(
+      BuildContext context, Events eventdata, AgywDream agywDream) {
+    updateFormState(context, false, eventdata, agywDream, null);
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AgywDreamsGoGirlsForm()));
+        MaterialPageRoute(builder: (context) => AgywDreamsServiceForm()));
   }
 
-  void onEditPrep(BuildContext context, Events eventdata) {
-    updateFormState(context, true, eventdata);
+  void onEditService(BuildContext context, Events eventdata,
+      AgywDream agywDream, List<ServiceEvents> serviceEvents) {
+    updateFormState(context, true, eventdata, agywDream, serviceEvents);
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AgywDreamsGoGirlsForm()));
+        MaterialPageRoute(builder: (context) => AgywDreamsServiceForm()));
   }
 
   @override
@@ -106,6 +128,10 @@ class _AgywDreamGoGirlsState extends State<AgywDreamGoGirls> {
                     List<Events> events = TrackedEntityInstanceUtil
                         .getAllEventListFromServiceDataState(
                             eventListByProgramStage, programStageids);
+                    List<ServiceEvents> serviceEvents = events
+                        .map((Events event) =>
+                            ServiceEvents().getServiceSessions(event))
+                        .toList();
                     int referralIndex = events.length + 1;
                     return Container(
                       child: Column(
@@ -126,7 +152,7 @@ class _AgywDreamGoGirlsState extends State<AgywDreamGoGirls> {
                                         ),
                                         child: events.length == 0
                                             ? Text(
-                                                'There is no Go Girls at a moment')
+                                                'There is no Services at a moment')
                                             : Container(
                                                 margin: EdgeInsets.symmetric(
                                                   vertical: 5.0,
@@ -142,13 +168,18 @@ class _AgywDreamGoGirlsState extends State<AgywDreamGoGirls> {
                                                         bottom: 15.0,
                                                       ),
                                                       child: PrepVisitListCard(
-                                                        visitName: "Go Girls Visit ",
+                                                        visitName: "Service",
                                                         onEditPrep: () =>
-                                                            onEditPrep(context,
-                                                                eventData),
+                                                            onEditService(
+                                                                context,
+                                                                eventData,
+                                                                agywDream,
+                                                                serviceEvents),
                                                         onViewPrep: () =>
-                                                            onViewPrep(context,
-                                                                eventData),
+                                                            onViewService(
+                                                                context,
+                                                                eventData,
+                                                                agywDream),
                                                         eventData: eventData,
                                                         visitCount:
                                                             referralIndex,
@@ -159,12 +190,14 @@ class _AgywDreamGoGirlsState extends State<AgywDreamGoGirls> {
                                               ),
                                       ),
                                       OvcEnrollmentFormSaveButton(
-                                          label: 'ADD Go Girls Visit',
+                                          label: 'ADD Service',
                                           labelColor: Colors.white,
                                           buttonColor: Color(0xFF1F8ECE),
                                           fontSize: 15.0,
-                                          onPressButton: () =>
-                                              onAddPrep(context, agywDream))
+                                          onPressButton: () => onAddService(
+                                              context,
+                                              agywDream,
+                                              serviceEvents))
                                     ],
                                   ),
                           ),

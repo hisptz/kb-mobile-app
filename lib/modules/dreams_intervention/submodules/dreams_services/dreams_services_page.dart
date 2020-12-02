@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kb_mobile_app/app_state/dreams_intervention_list_state/dream_current_selection_state.dart';
 import 'package:kb_mobile_app/app_state/dreams_intervention_list_state/dreams_intervention_list_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_event_data_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_form_state.dart';
 import 'package:kb_mobile_app/core/components/circular_process_loader.dart';
+import 'package:kb_mobile_app/core/utils/app_util.dart';
+import 'package:kb_mobile_app/core/utils/tracked_entity_instance_util.dart';
 import 'package:kb_mobile_app/models/agyw_dream.dart';
+import 'package:kb_mobile_app/models/events.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_beneficiary_card_body.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/components/dreams_beneficiary_card.dart';
 import 'package:kb_mobile_app/core/components/sub_module_home_container.dart';
@@ -13,16 +17,13 @@ import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_serv
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/art_refill/agyw_dreams_art_refill.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/condoms/agyw_dreams_condoms.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/contraceptives/agyw_dreams_contraceptives.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/go_girls/agyw_dreams_go_girls.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hiv_prev/dreams_hiv_prev_home.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hiv_reg/agyw_dreams_hiv_register.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/lbse/agyw_dreams_lbse.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/msg_hiv/agyw_dreams_msg_hiv_register.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/pep/agyw_dreams_pep.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/post_gbv/agyw_dreams_post_gbv.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/prep/agyw_dreams_prep.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/service_form/agyw_dreams_service_form_page.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/srh/agyw_dreams_srh.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/stepping_stones/agyw_dreams_stepping_stones.dart';
 import 'package:provider/provider.dart';
 
 import 'sub_modules/hts/hts_home_page.dart';
@@ -75,20 +76,11 @@ class _DreamsServicesPageState extends State<DreamsServicesPage> {
         context, MaterialPageRoute(builder: (context) => DreamsHIVPrevHome()));
   }
 
-  void onOpenIPCForm(
-    BuildContext context,
-    AgywDream agywBeneficiary,
-  ) {
-    updateStateData(context, agywBeneficiary);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AgywDreamsHIVRegister()));
-  }
-
   void onOpenPrepForm(
     BuildContext context,
     AgywDream agywBeneficiary,
   ) {
-    updateStateData(context, agywBeneficiary);
+    updateStateData(context, agywBeneficiary);  
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => AgywDreamsPrep()));
   }
@@ -110,13 +102,14 @@ class _DreamsServicesPageState extends State<DreamsServicesPage> {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => AgywDreamCondoms()));
   }
+
   void onOpenContraceptivesForm(
     BuildContext context,
     AgywDream agywBeneficiary,
   ) {
     updateStateData(context, agywBeneficiary);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AgywDreamContraceptives()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => AgywDreamContraceptives()));
   }
 
   void onOpenANCForm(
@@ -146,24 +139,6 @@ class _DreamsServicesPageState extends State<DreamsServicesPage> {
         context, MaterialPageRoute(builder: (context) => AgywDreamArtRefill()));
   }
 
-  void onOpenGoGirlsForm(
-    BuildContext context,
-    AgywDream agywBeneficiary,
-  ) {
-    updateStateData(context, agywBeneficiary);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AgywDreamGoGirls()));
-  }
-
-  void onOpenLBSEForm(
-    BuildContext context,
-    AgywDream agywBeneficiary,
-  ) {
-    updateStateData(context, agywBeneficiary);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AgywDreamLBSE()));
-  }
-
   void onOpenPEPForm(
     BuildContext context,
     AgywDream agywBeneficiary,
@@ -173,13 +148,13 @@ class _DreamsServicesPageState extends State<DreamsServicesPage> {
         context, MaterialPageRoute(builder: (context) => AgywDreamPEP()));
   }
 
-  void onOpenSteppingStonesForm(
+  void onOpenServiceForm(
     BuildContext context,
     AgywDream agywBeneficiary,
   ) {
     updateStateData(context, agywBeneficiary);
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AgywDreamSteppingStones()));
+        MaterialPageRoute(builder: (context) => AgywDreamsServiceFormPage()));
   }
 
   void updateStateData(
@@ -253,43 +228,31 @@ class _DreamsServicesPageState extends State<DreamsServicesPage> {
                                 cardBottonActions: ServiceCardBottonAction(
                                   onOpenPrepForm: () =>
                                       onOpenPrepForm(context, agywBeneficiary),
-                                  onOpenHIVPrepForm: () => 
-                                      onOpenHIVPrepForm(
+                                  onOpenHIVPrepForm: () => onOpenHIVPrepForm(
                                       context, agywBeneficiary),
-                                  onOpenIPCForm: () => 
-                                      onOpenIPCForm(
-                                      context, agywBeneficiary),
+      
                                   onOpenSRHForm: () =>
                                       onOpenSRHForm(context, agywBeneficiary),
                                   onOpenHTSForm: () =>
                                       onOpenHTSForm(context, agywBeneficiary),
-                                  onOpenCondomForm: () => 
-                                      onOpenCondomForm(
+                                  onOpenCondomForm: () => onOpenCondomForm(
                                       context, agywBeneficiary),
-                                   onOpenContraceptivesForm: () => 
+                                  onOpenContraceptivesForm: () =>
                                       onOpenContraceptivesForm(
-                                      context, agywBeneficiary),
-                                  onOpenMSGHIVForm: () => 
-                                      onOpenMSGHIVForm(
+                                          context, agywBeneficiary),
+                                  onOpenMSGHIVForm: () => onOpenMSGHIVForm(
                                       context, agywBeneficiary),
                                   onOpenANCForm: () =>
                                       onOpenANCForm(context, agywBeneficiary),
                                   onOpenArtRefillForm: () =>
                                       onOpenArtRefillForm(
                                           context, agywBeneficiary),
-                                  onOpenGoGirlsForm: () => 
-                                      onOpenGoGirlsForm(
-                                      context, agywBeneficiary),
-                                  onOpenLBSEForm: () =>
-                                      onOpenLBSEForm(context, agywBeneficiary),
                                   onOpenPEPForm: () =>
                                       onOpenPEPForm(context, agywBeneficiary),
-                                  onOpenPostGBVForm: () => 
-                                      onOpenPostGBVForm(
+                                  onOpenPostGBVForm: () => onOpenPostGBVForm(
                                       context, agywBeneficiary),
-                                  onOpenSteppingStonesForm: () =>
-                                      onOpenSteppingStonesForm(
-                                          context, agywBeneficiary),
+                                  onOpenServiceForm: () => onOpenServiceForm(
+                                      context, agywBeneficiary),
                                 ),
                                 cardBottonContent: Container(),
                               );

@@ -1,0 +1,185 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kb_mobile_app/app_state/dreams_intervention_list_state/dream_current_selection_state.dart';
+import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_event_data_state.dart';
+import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_form_state.dart';
+import 'package:kb_mobile_app/app_state/intervention_card_state/intervention_card_state.dart';
+import 'package:kb_mobile_app/core/components/Intervention_bottom_navigation_bar_container.dart';
+import 'package:kb_mobile_app/core/components/circular_process_loader.dart';
+import 'package:kb_mobile_app/core/components/entry_forms/entry_form_container.dart';
+import 'package:kb_mobile_app/core/components/sub_page_app_bar.dart';
+import 'package:kb_mobile_app/core/components/sup_page_body.dart';
+import 'package:kb_mobile_app/core/utils/app_util.dart';
+import 'package:kb_mobile_app/models/agyw_dream.dart';
+import 'package:kb_mobile_app/models/form_section.dart';
+import 'package:kb_mobile_app/models/intervention_card.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_beneficiary_top_header.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/dreams_services_page.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/hts_register.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/constants/agyw_dreams_hts_constant.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/skip_logics/agyw_dreams_hts_register_skip_logic.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/prep/pages/agyw_dreams_prep_form.dart';
+import 'package:kb_mobile_app/modules/ovc_intervention/components/ovc_enrollment_form_save_button.dart';
+import 'package:provider/provider.dart';
+import 'agyw_dreams_hts_consent_for_release_status.dart';
+
+class AgywDreamsHTSRegisterForm extends StatefulWidget {
+  AgywDreamsHTSRegisterForm({Key key, this.isComingFromPrep}) : super(key: key);
+  final bool isComingFromPrep;
+
+  @override
+  _AgywDreamsHTSRegisterFormState createState() =>
+      _AgywDreamsHTSRegisterFormState();
+}
+
+class _AgywDreamsHTSRegisterFormState extends State<AgywDreamsHTSRegisterForm> {
+  final String label = 'HTS Register';
+  List<FormSection> formSections;
+  bool isFormReady = false;
+  bool isSaving = false;
+  bool isComingFromPrep;
+
+  @override
+  void initState() {
+    super.initState();
+    isComingFromPrep = widget.isComingFromPrep;
+    formSections = HTSRegister.getFormSections();
+    Timer(Duration(seconds: 1), () {
+      setState(() {
+        isFormReady = true;
+        evaluateSkipLogics();
+      });
+    });
+  }
+
+  evaluateSkipLogics() {
+    Timer(
+      Duration(milliseconds: 200),
+      () async {
+        Map dataObject =
+            Provider.of<ServiceFormState>(context, listen: false).formState;
+        await AgywDreamsHTSRegisterSkipLogic.evaluateSkipLogics(
+          context,
+          formSections,
+          dataObject,
+        );
+      },
+    );
+  }
+
+  void onInputValueChange(String id, dynamic value) {
+    Provider.of<ServiceFormState>(context, listen: false)
+        .setFormFieldState(id, value);
+    evaluateSkipLogics();
+  }
+
+  void onSaveForm(BuildContext context, Map dataObject, AgywDream agywDream) {
+    Provider.of<DreamBenefeciarySelectionState>(context, listen: false)
+        .setCurrentAgywDream(agywDream);
+    if (isComingFromPrep == true &&
+        dataObject[AgywDreamsHTSConstant.HIVResultStatus] == 'Negative') {
+  
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => AgywDreamsPrepFormPage()));
+    } else if (isComingFromPrep == true &&
+        dataObject[AgywDreamsHTSConstant.HIVResultStatus] == 'Positive') {
+      Timer(Duration(seconds: 1), () {
+        setState(() {
+          AppUtil.showToastMessage(
+              message: 'You are not eligible to take PREP program',
+              position: ToastGravity.TOP);
+          Navigator.popUntil(context, (route) => route.isFirst);
+        });
+      });
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AgywDreamsHTSConsentForReleaseStatus()));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(65.0),
+          child: Consumer<IntervetionCardState>(
+            builder: (context, intervetionCardState, child) {
+              InterventionCard activeInterventionProgram =
+                  intervetionCardState.currentIntervetionProgram;
+              return SubPageAppBar(
+                label: label,
+                activeInterventionProgram: activeInterventionProgram,
+              );
+            },
+          ),
+        ),
+        body: SubPageBody(
+          body: Container(child: Consumer<DreamBenefeciarySelectionState>(
+            builder: (context, nonAgywState, child) {
+              AgywDream agywDream = nonAgywState.currentAgywDream;
+              return Consumer<ServiceFormState>(
+                builder: (context, serviceFormState, child) {
+                  return Container(
+                    child: Column(
+                      children: [
+                        DreamBenefeciaryTopHeader(
+                          agywDream: agywDream,
+                        ),
+                        !isFormReady
+                            ? Container(
+                                child: CircularProcessLoader(
+                                  color: Colors.blueGrey,
+                                ),
+                              )
+                            : Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 10.0,
+                                      left: 13.0,
+                                      right: 13.0,
+                                    ),
+                                    child: EntryFormContainer(
+                                      hiddenFields:
+                                          serviceFormState.hiddenFields,
+                                      hiddenSections:
+                                          serviceFormState.hiddenSections,
+                                      formSections: formSections,
+                                      mandatoryFieldObject: Map(),
+                                      isEditableMode:
+                                          serviceFormState.isEditableMode,
+                                      dataObject: serviceFormState.formState,
+                                      onInputValueChange: onInputValueChange,
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: serviceFormState.isEditableMode,
+                                    child: OvcEnrollmentFormSaveButton(
+                                      label: isSaving
+                                          ? 'Saving ...'
+                                          : 'SAVE & CONTINUE',
+                                      labelColor: Colors.white,
+                                      buttonColor: Color(0xFF258DCC),
+                                      fontSize: 15.0,
+                                      onPressButton: () => onSaveForm(
+                                          context,
+                                          serviceFormState.formState,
+                                          agywDream),
+                                    ),
+                                  )
+                                ],
+                              )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          )),
+        ),
+        bottomNavigationBar: InterventionBottomNavigationBarContainer());
+  }
+}

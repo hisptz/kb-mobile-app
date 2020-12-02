@@ -4,7 +4,7 @@ import 'package:kb_mobile_app/core/utils/form_util.dart';
 import 'package:kb_mobile_app/models/form_section.dart';
 import 'package:provider/provider.dart';
 
-class AgywDreamsLBSESkipLogic {
+class AgywDreamsHTSTBScreeningSkipLogic {
   static Map hiddenFields = Map();
   static Map hiddenSections = Map();
 
@@ -20,11 +20,10 @@ class AgywDreamsLBSESkipLogic {
       inputFieldIds.add('$key');
     }
     inputFieldIds = inputFieldIds.toSet().toList();
+    assignInputFieldValue(context, 'uRsImCXXDXe', dataObject['N8tlZl91pBY']);
     for (String inputFieldId in inputFieldIds) {
       String value = '${dataObject[inputFieldId]}';
-      if (inputFieldId == 'lvT9gfpHIlT' && value == 'null') {
-        hiddenFields['QHEd0nnjBQG'] = true;
-      }    }
+    }
     for (String sectionId in hiddenSections.keys) {
       List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
           .where((formSection) => formSection.id == sectionId)
@@ -62,5 +61,14 @@ class AgywDreamsLBSESkipLogic {
   ) {
     Provider.of<ServiceFormState>(context, listen: false)
         .setFormFieldState(inputFieldId, value);
+  }
+
+  static String calculateBMI(weight, height) {
+    double bmi;
+    try {
+      bmi =
+          double.parse(weight) / (double.parse(height) * double.parse(height));
+    } catch (e) {}
+    return bmi != null ? bmi.toStringAsPrecision(3) : '';
   }
 }
