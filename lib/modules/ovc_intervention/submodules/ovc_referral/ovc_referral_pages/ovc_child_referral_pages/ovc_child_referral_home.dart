@@ -61,8 +61,12 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
 
   void onAddRefferal(BuildContext context, OvcHouseHoldChild child) {
     updateFormState(context, true, null);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => OvcChildReferralAddForm()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OvcChildReferralAddForm(),
+      ),
+    );
   }
 
   void onViewChildReferral(
@@ -71,12 +75,14 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
     int referralIndex,
   ) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OvcChildReferralView(
-                  eventData: eventData,
-                  referralIndex: referralIndex,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => OvcChildReferralView(
+          eventData: eventData,
+          referralIndex: referralIndex,
+        ),
+      ),
+    );
   }
 
   void onCLOReferralSelection(BuildContext context) {
@@ -148,7 +154,12 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
                                   : Container(
                                       child:
                                           currentUserState.canManageCLOReferral
-                                              ? ReferralTabsContainer()
+                                              ? ReferralTabsContainer(
+                                                  isCaregiver: false,
+                                                  isDreamBeneficiary: false,
+                                                  isOvcChild: true,
+                                                  themeColor: Color(0xFF4B9F46),
+                                                )
                                               : OvcChildReferral(),
                                     ),
                             )
