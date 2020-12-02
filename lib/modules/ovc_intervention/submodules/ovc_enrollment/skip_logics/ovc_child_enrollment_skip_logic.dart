@@ -30,7 +30,6 @@ class OvcChildEnrollmentSkipLogic {
           hiddenFields['GMcljM7jbNG'] = true;
         }
       }
-
       if (inputFieldId == 'UeF4OvjIIEK' &&
           (value.isEmpty || '$value'.trim() != 'true')) {
         hiddenFields['nOgf8LKXS4k'] = true;
@@ -52,9 +51,15 @@ class OvcChildEnrollmentSkipLogic {
           (value.isEmpty || '$value'.trim() != 'Other')) {
         hiddenFields['GM2mJDlGZin'] = true;
       }
-
       if (inputFieldId == 'YR7Xxk14qoP' && value != 'true') {
         hiddenFields['YR7Xxk14qoP_checkbox'] = true;
+        hiddenFields['dufGxx0KVg0'] = true;
+        hiddenFields['nfp9NHLf25K'] = true;
+        hiddenFields['tbLVGG4zDrJ'] = true;
+        hiddenFields['ULr0tYkjTTB'] = true;
+        hiddenFields['BfbiOanp9Pi'] = true;
+        hiddenFields['X3MQhmVA1Jt'] = true;
+        hiddenFields['TPRVr4ua9f9'] = true;
       }
       if (inputFieldId == 'omUPOnb4JVp' && value != 'true') {
         hiddenFields['WsmWkkFBiT6'] = true;

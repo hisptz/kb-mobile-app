@@ -86,7 +86,6 @@ class _OvcEnrollmentChildFormState extends State<OvcEnrollmentChildForm> {
       if (inputFieldId == 'Gkjp5XZD70V' &&
           (value.isEmpty || '$value'.trim() != 'true')) {
         hiddenFields['Sa0KVprHUr7'] = true;
-        hiddenFields['XZh0Uew9Xk0'] = true;
         hiddenFields['wtrZQadTkOL'] = true;
         hiddenFields['Mc3k3bSwXNe'] = true;
         hiddenFields['CePNVGSnj00'] = true;
@@ -101,8 +100,18 @@ class _OvcEnrollmentChildFormState extends State<OvcEnrollmentChildForm> {
           (value.isEmpty || '$value'.trim() != 'Other')) {
         hiddenFields['GM2mJDlGZin'] = true;
       }
-      if (inputFieldId == 'Sa0KVprHUr7' && value != 'Date') {
-        hiddenFields['XZh0Uew9Xk0'] = true;
+      if (inputFieldId == 'YR7Xxk14qoP' && value != 'true') {
+        hiddenFields['YR7Xxk14qoP_checkbox'] = true;
+        hiddenFields['dufGxx0KVg0'] = true;
+        hiddenFields['nfp9NHLf25K'] = true;
+        hiddenFields['tbLVGG4zDrJ'] = true;
+        hiddenFields['ULr0tYkjTTB'] = true;
+        hiddenFields['BfbiOanp9Pi'] = true;
+        hiddenFields['X3MQhmVA1Jt'] = true;
+        hiddenFields['TPRVr4ua9f9'] = true;
+      }
+      if (inputFieldId == 'omUPOnb4JVp' && value != 'true') {
+        hiddenFields['WsmWkkFBiT6'] = true;
       }
     }
     for (String sectionId in hiddenSections.keys) {

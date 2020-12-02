@@ -4,9 +4,9 @@ class ReferralTabsContainer extends StatelessWidget {
   const ReferralTabsContainer({
     Key key,
     @required this.themeColor,
-    @required this.isDreamBeneficiary,
-    @required this.isCaregiver,
-    @required this.isOvcChild,
+    this.isDreamBeneficiary = false,
+    this.isCaregiver = false,
+    this.isOvcChild = false,
   }) : super(key: key);
 
   final bool isDreamBeneficiary;
@@ -20,8 +20,22 @@ class ReferralTabsContainer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            child: Text('Tabs'),
-          ),
+              child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.redAccent,
+                  height: 20.0,
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.amberAccent,
+                  height: 20.0,
+                ),
+              ),
+            ],
+          )),
           Container(
             child: Text('referarral'),
           )
