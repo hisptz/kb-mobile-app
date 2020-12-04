@@ -7,6 +7,7 @@ class CurrentUserState with ChangeNotifier {
   // initiat state
   CurrentUser _currentUser;
   String _currentUserLocations;
+  bool _isCloManager;
   bool _canManageDreams;
   bool _canManageOGAC;
   bool _canManageOvc;
@@ -49,6 +50,7 @@ class CurrentUserState with ChangeNotifier {
   bool get canManagePOSTGBV => _canManagePOSTGBV ?? false;
   bool get canManagePEP => _canManagePEP ?? false;
   bool get canManageServiceForm => _canManageServiceForm ?? false;
+  bool get isCloManager => _isCloManager ?? false;
 
   void updateUserAccessStatus(String implementingPartner) {
     if (implementingPartner == 'Super user') {
@@ -123,6 +125,7 @@ class CurrentUserState with ChangeNotifier {
       _canManageDreams = true;
       _canManageReferral = true;
       _canManageCLOReferral = true;
+      _isCloManager = true;
     }
   }
 
@@ -154,6 +157,7 @@ class CurrentUserState with ChangeNotifier {
     _canManageDreams = false;
     _canManageOGAC = false;
     _canManageOvc = false;
+    _isCloManager = false;
     _canManageNoneAgyw = false;
     _canManageHivPrevention = false;
     _canManageReferral = false;
