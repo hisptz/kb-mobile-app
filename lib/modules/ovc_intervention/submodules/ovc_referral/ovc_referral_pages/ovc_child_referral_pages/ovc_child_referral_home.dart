@@ -152,15 +152,17 @@ class _OvcChildReferralHomeState extends State<OvcChildReferralHome> {
                                       ),
                                     )
                                   : Container(
-                                      child:
-                                          currentUserState.canManageCLOReferral
-                                              ? ReferralTabsContainer(
-                                                  isCaregiver: false,
-                                                  isDreamBeneficiary: false,
-                                                  isOvcChild: true,
-                                                  themeColor: Color(0xFF4B9F46),
-                                                )
-                                              : OvcChildReferral(),
+                                      child: currentUserState
+                                              .canManageCLOReferral
+                                          ? ReferralTabsContainer(
+                                              isCaregiver: false,
+                                              isDreamBeneficiary: false,
+                                              isOvcChild: true,
+                                              themeColor: Color(0xFF4B9F46),
+                                              isCloManager:
+                                                  currentUserState.isCloManager,
+                                            )
+                                          : OvcChildReferral(),
                                     ),
                             )
                           ],

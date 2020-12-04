@@ -127,25 +127,25 @@ class _OvcHouseHoldAddReferralFormState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
-          child: Consumer<IntervetionCardState>(
-            builder: (context, intervetionCardState, child) {
-              InterventionCard activeInterventionProgram =
-                  intervetionCardState.currentIntervetionProgram;
-              return SubPageAppBar(
-                label: label,
-                activeInterventionProgram: activeInterventionProgram,
-              );
-            },
-          ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(65.0),
+        child: Consumer<IntervetionCardState>(
+          builder: (context, intervetionCardState, child) {
+            InterventionCard activeInterventionProgram =
+                intervetionCardState.currentIntervetionProgram;
+            return SubPageAppBar(
+              label: label,
+              activeInterventionProgram: activeInterventionProgram,
+            );
+          },
         ),
-        body: SubPageBody(
-          body: Container(child: Consumer<OvcHouseHoldCurrentSelectionState>(
+      ),
+      body: SubPageBody(
+        body: Container(
+          child: Consumer<OvcHouseHoldCurrentSelectionState>(
             builder: (context, ovcHouseHoldCurrentSelectionState, child) {
               OvcHouseHold currentOvcHouseHold =
                   ovcHouseHoldCurrentSelectionState.currentOvcHouseHold;
-
               return Consumer<ServiceFormState>(
                 builder: (context, serviceFormState, child) {
                   return Container(
@@ -187,9 +187,10 @@ class _OvcHouseHoldAddReferralFormState
                                     buttonColor: Color(0xFF4B9F46),
                                     fontSize: 15.0,
                                     onPressButton: () => onSaveForm(
-                                        context,
-                                        serviceFormState.formState,
-                                        currentOvcHouseHold),
+                                      context,
+                                      serviceFormState.formState,
+                                      currentOvcHouseHold,
+                                    ),
                                   )
                                 ],
                               )
@@ -199,8 +200,10 @@ class _OvcHouseHoldAddReferralFormState
                 },
               );
             },
-          )),
+          ),
         ),
-        bottomNavigationBar: InterventionBottomNavigationBarContainer());
+      ),
+      bottomNavigationBar: InterventionBottomNavigationBarContainer(),
+    );
   }
 }
