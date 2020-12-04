@@ -19,7 +19,7 @@ class AppInfoState with ChangeNotifier {
       _currentAppName = await GetVersion.appName;
       _currentPlatformVersion = await GetVersion.platformVersion;
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
     notifyListeners();
   }

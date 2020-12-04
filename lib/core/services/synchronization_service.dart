@@ -78,9 +78,9 @@ class SynchronizationService {
             teiRelationshipsFromServer
                 .add(TeiRelationship().fromOnline(teiRelationship));
           }
-          print(teiRelationshipsFromServer);
+          // print(teiRelationshipsFromServer);
         } else {
-          print(response);
+          // print(response);
           return null;
         }
       }
@@ -267,7 +267,7 @@ class SynchronizationService {
         referenceIds.add(importSummary['reference']);
       } else {
         //@TODO add logs
-        print(json.encode(importSummary));
+        // print(json.encode(importSummary));
       }
     }
     return referenceIds;
