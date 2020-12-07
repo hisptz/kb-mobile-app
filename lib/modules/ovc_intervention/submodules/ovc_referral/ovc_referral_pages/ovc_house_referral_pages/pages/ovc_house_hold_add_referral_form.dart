@@ -5,6 +5,7 @@ import 'package:kb_mobile_app/app_state/enrollment_service_form_state/ovc_house_
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_event_data_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_form_state.dart';
 import 'package:kb_mobile_app/app_state/intervention_card_state/intervention_card_state.dart';
+import 'package:kb_mobile_app/app_state/language_translation_state/language_translation_state.dart';
 import 'package:kb_mobile_app/core/components/Intervention_bottom_navigation_bar_container.dart';
 import 'package:kb_mobile_app/core/components/circular_process_loader.dart';
 import 'package:kb_mobile_app/core/components/entry_forms/entry_form_container.dart';
@@ -32,7 +33,7 @@ class OvcHouseHoldAddReferralForm extends StatefulWidget {
 
 class _OvcHouseHoldAddReferralFormState
     extends State<OvcHouseHoldAddReferralForm> {
-  final String label = 'Household Referral Form';
+  //final String label = 'Household Referral Form';
   List<FormSection> formSections;
   bool isFormReady = false;
   bool isSaving = false;
@@ -102,11 +103,18 @@ class _OvcHouseHoldAddReferralFormState
             .resetServiceEventDataState(currentOvcHouseHold.id);
         Timer(Duration(seconds: 1), () {
           setState(() {
-            AppUtil.showToastMessage(
-                message: 'Form has been saved successfully',
-                position: ToastGravity.TOP);
-            Navigator.pop(context);
+            isSaving = true;
           });
+          String currentLanguage =
+              Provider.of<LanguageTranslationState>(context, listen: false)
+                  .currentLanguage;
+          AppUtil.showToastMessage(
+            message: currentLanguage == 'lesotho'
+                ? 'Fomo e bolokeile'
+                : 'Form has been saved successfully',
+            position: ToastGravity.TOP,
+          );
+          Navigator.pop(context);
         });
       } catch (e) {
         Timer(Duration(seconds: 1), () {
@@ -129,13 +137,20 @@ class _OvcHouseHoldAddReferralFormState
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(65.0),
-        child: Consumer<IntervetionCardState>(
-          builder: (context, intervetionCardState, child) {
-            InterventionCard activeInterventionProgram =
-                intervetionCardState.currentIntervetionProgram;
-            return SubPageAppBar(
-              label: label,
-              activeInterventionProgram: activeInterventionProgram,
+        child: Consumer<LanguageTranslationState>(
+          builder: (context, languageTranslationState, child) {
+            String currentLanguage = languageTranslationState.currentLanguage;
+            return Consumer<IntervetionCardState>(
+              builder: (context, intervetionCardState, child) {
+                InterventionCard activeInterventionProgram =
+                    intervetionCardState.currentIntervetionProgram;
+                return SubPageAppBar(
+                  label: currentLanguage == 'lesotho'
+                      ? 'Fomo ea Referral ea lelapa'
+                      : 'HouseHold Referral Form',
+                  activeInterventionProgram: activeInterventionProgram,
+                );
+              },
             );
           },
         ),

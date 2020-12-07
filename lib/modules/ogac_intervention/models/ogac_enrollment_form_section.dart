@@ -61,6 +61,7 @@ class OgacInterventionFormSection {
           InputField(
             id: 'location',
             name: 'Location',
+            translatedName: 'Sebaka',
             valueType: 'ORGANISATION_UNIT',
             allowedSelectedLevels: [3, 4],
             inputColor: Color(0xFFF05A2A),
@@ -113,6 +114,7 @@ class OgacInterventionFormSection {
           InputField(
             id: 'ls9hlz2tyol',
             name: 'Age',
+            translatedName: 'Lilemo',
             isReadOnly: true,
             valueType: 'NUMBER',
             inputColor: Color(0xFFF05A2A),
@@ -121,6 +123,7 @@ class OgacInterventionFormSection {
           InputField(
               id: 'vIX4GTSCX4P',
               name: 'Sex',
+              translatedName: 'Boleng',
               valueType: 'TEXT',
               renderAsRadio: true,
               inputColor: Color(0xFFF05A2A),

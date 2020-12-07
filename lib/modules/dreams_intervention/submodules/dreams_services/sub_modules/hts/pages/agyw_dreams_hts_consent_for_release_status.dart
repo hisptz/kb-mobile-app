@@ -5,6 +5,7 @@ import 'package:kb_mobile_app/app_state/dreams_intervention_list_state/dream_cur
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_event_data_state.dart';
 import 'package:kb_mobile_app/app_state/enrollment_service_form_state/service_form_state.dart';
 import 'package:kb_mobile_app/app_state/intervention_card_state/intervention_card_state.dart';
+import 'package:kb_mobile_app/app_state/language_translation_state/language_translation_state.dart';
 import 'package:kb_mobile_app/core/components/Intervention_bottom_navigation_bar_container.dart';
 import 'package:kb_mobile_app/core/components/circular_process_loader.dart';
 import 'package:kb_mobile_app/core/components/entry_forms/entry_form_container.dart';
@@ -19,6 +20,7 @@ import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_benef
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/client_information.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/consent_for_release_of_status.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/hts_consent.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/hts_register.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/constants/agyw_dreams_hts_constant.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/pages/agyw_dreams_hts_tb_screening.dart';
 import 'package:kb_mobile_app/modules/ovc_intervention/components/ovc_enrollment_form_save_button.dart';
@@ -45,6 +47,7 @@ class _AgywDreamsHTSConsentForReleaseStatusState
     super.initState();
     formSections = ConsentForReleaseOfStatus.getFormSections();
     allFormSections.addAll(formSections);
+    allFormSections.addAll(HTSRegister.getFormSections());
     allFormSections.addAll(ClientInformation.getFormSections());
     allFormSections.addAll(HTSConsent.getFormSections());
     Timer(Duration(seconds: 1), () {
@@ -87,28 +90,33 @@ class _AgywDreamsHTSConsentForReleaseStatusState
             eventDate,
             agywDream.id,
             eventId,
-            hiddenFields);
-        if(dataObject['N8tlZl91pBY']== 'Positive'){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AgywDreamsHTSTBForm(
-                    htsToTBLinkageValue:
-                        dataObject[AgywDreamsHTSConstant.htsToTBLinkage])));
-        }else{
-        Provider.of<ServiveEventDataState>(context, listen: false)
-          .resetServiceEventDataState(agywDream.id);
-        Timer(Duration(seconds: 1), () {
-          setState(() {
-            AppUtil.showToastMessage(
-                message: 'Form has been saved successfully',
-                position: ToastGravity.TOP);
-
-            Navigator.popUntil(context, (route) => route.isFirst);
+            hiddenFields,
+            skippedFields: [AgywDreamsHTSConstant.bmiKey]);
+        if (dataObject[AgywDreamsHTSConstant.HIVResultStatus] == 'Positive') {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AgywDreamsHTSTBForm(
+                      htsToTBLinkageValue:
+                          dataObject[AgywDreamsHTSConstant.htsToTBLinkage])));
+        } else {
+          Provider.of<ServiveEventDataState>(context, listen: false)
+              .resetServiceEventDataState(agywDream.id);
+          Timer(Duration(seconds: 1), () {
+            setState(() {
+              String currentLanguage =
+                  Provider.of<LanguageTranslationState>(context, listen: false)
+                      .currentLanguage;
+              AppUtil.showToastMessage(
+                message: currentLanguage == 'lesotho'
+                    ? 'Fomo e bolokeile'
+                    : 'Form has been saved successfully',
+                position: ToastGravity.TOP,
+              );
+              Navigator.popUntil(context, (route) => route.isFirst);
+            });
           });
-        });
         }
-
       } catch (e) {
         Timer(Duration(seconds: 1), () {
           setState(() {

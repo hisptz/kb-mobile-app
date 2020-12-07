@@ -21,7 +21,8 @@ class LanguageSelection extends StatefulWidget {
 }
 
 class _LanguageSelectionState extends State<LanguageSelection> {
-  final String label = 'Language setting';
+  final String label = 'Language settings';
+  final String translatedLabel = 'Khetha Puo';
   String selectionLanguageCode = '';
 
   @override
@@ -69,22 +70,43 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                     builder: (context, intervetionCardState, child) {
                       InterventionCard activeInterventionProgram =
                           intervetionCardState.currentIntervetionProgram;
-                      return SubPageAppBar(
-                        label: label,
-                        activeInterventionProgram: activeInterventionProgram,
-                        disableSelectionOfActiveIntervention: false,
+                      return Container(
+                        child: Consumer<LanguageTranslationState>(
+                          builder: (context, languageTranslationState, child) {
+                            String currentLanguage =
+                                languageTranslationState.currentLanguage;
+                            return SubPageAppBar(
+                              label: currentLanguage == 'lesotho'
+                                  ? translatedLabel
+                                  : label,
+                              activeInterventionProgram:
+                                  activeInterventionProgram,
+                              disableSelectionOfActiveIntervention: false,
+                            );
+                          },
+                        ),
                       );
                     },
                   ),
                 ),
-          body: LanguageSelectionContainer(
-              selectionLanguageCode: selectionLanguageCode,
-              showLanguageSettingAppBar: widget.showLanguageSettingAppBar,
-              onSetSelectedLanguage: (String selectionLanguageCode) =>
-                  onSetSelectedLanguage(
+          body: Container(
+            child: Consumer<LanguageTranslationState>(
+              builder: (context, languageTranslationState, child) {
+                String currentLanguage =
+                    languageTranslationState.currentLanguage;
+                return LanguageSelectionContainer(
+                  currentLanguage: currentLanguage,
+                  selectionLanguageCode: selectionLanguageCode,
+                  showLanguageSettingAppBar: widget.showLanguageSettingAppBar,
+                  onSetSelectedLanguage: (String selectionLanguageCode) =>
+                      onSetSelectedLanguage(
                     context,
                     selectionLanguageCode,
-                  )),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
