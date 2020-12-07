@@ -271,9 +271,6 @@ mixin OvcCasePlanFollowUpSkipLogic {
         hiddenFields['QCbFgssCzeF'] = false;
       }
     });
-    // for (String inputFieldId in inputFieldIds) {
-
-    // }
     for (String sectionId in hiddenSections.keys) {
       List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
           .where((formSection) => formSection.id == sectionId)
