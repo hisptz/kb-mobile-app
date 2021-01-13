@@ -114,6 +114,10 @@ class SelectionOptionContainer extends StatelessWidget {
   final Function onValueChange;
   @override
   Widget build(BuildContext context) {
+    void onChange(value){
+      FocusScope.of(context).requestFocus(new FocusNode());
+      onValueChange(value);
+    }
     return Row(
       children: [
         Expanded(
@@ -133,7 +137,8 @@ class SelectionOptionContainer extends StatelessWidget {
               height: 0,
               color: Colors.transparent,
             ),
-            onChanged: isReadOnly ? null : onValueChange,
+            onChanged: isReadOnly ? null : onChange,
+            disabledHint: Text(_selectedOption ?? '', style: TextStyle(color: color),),
             items: _options.map<DropdownMenuItem<dynamic>>(
               (InputFieldOption option) {
                 return DropdownMenuItem<dynamic>(

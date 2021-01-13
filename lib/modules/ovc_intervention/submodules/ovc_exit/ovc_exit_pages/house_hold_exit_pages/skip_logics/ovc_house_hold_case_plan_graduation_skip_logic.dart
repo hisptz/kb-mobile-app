@@ -37,10 +37,13 @@ class OvcHouseHoldCasePlanAchievementSkipLogic {
       }
     }
     for (String sectionId in hiddenSections.keys) {
-      List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
+      List<FormSection> allFormSections =
+          FormUtil.getFlattenFormSections(formSections);
+      List<String> hidddenSectionInputFieldIds = FormUtil.getFormFieldIds(allFormSections
           .where((formSection) => formSection.id == sectionId)
-          .toList());
-      for (String inputFieldId in inputFieldIds) {
+          .toList());      
+      for (String inputFieldId in hidddenSectionInputFieldIds) {
+
         hiddenFields[inputFieldId] = true;
       }
     }

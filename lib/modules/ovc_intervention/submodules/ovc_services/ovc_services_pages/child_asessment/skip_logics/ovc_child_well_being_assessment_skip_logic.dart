@@ -186,7 +186,7 @@ class OvcChildWellBeingAssessmentSkipLogic {
         }
 
         //Logic change
-        if (inputFieldId == 'mtZfZIAkVjt' && value != 'true') {
+        if (inputFieldId == 'mtZfZIAkVjt' && (value == 'true' || value == 'null')) {
           hiddenFields['mtZfZIAkVjt_checkbox'] = true;
           hiddenFields['qK6pCo37tWW'] = true;
           hiddenFields['Tbga457Gs8B'] = true;
@@ -443,10 +443,13 @@ class OvcChildWellBeingAssessmentSkipLogic {
       }
     }
     for (String sectionId in hiddenSections.keys) {
-      List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
+      List<FormSection> allFormSections =
+          FormUtil.getFlattenFormSections(formSections);
+      List<String> hidddenSectionInputFieldIds = FormUtil.getFormFieldIds(allFormSections
           .where((formSection) => formSection.id == sectionId)
-          .toList());
-      for (String inputFieldId in inputFieldIds) {
+          .toList());      
+      for (String inputFieldId in hidddenSectionInputFieldIds) {
+
         hiddenFields[inputFieldId] = true;
       }
     }

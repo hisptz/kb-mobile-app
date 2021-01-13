@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/models/agyw_dreams_index_info_event.dart';
+import 'package:kb_mobile_app/models/agyw_dreams_index_info_event.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/components/dreams_hts_index_card_bottom_content.dart';
 
 class DreamsHTSIndexCardBody extends StatelessWidget {

@@ -7,6 +7,7 @@ class HouseholdServicesOngoingMonitoring {
     return [
       FormSection(
           name: 'DOMAIN HEALTH',
+          translatedName: 'BOPHELO BO BOTLE',
           color: Color(0xFF4D9E49),
           borderColor: Color(0xFF4D9E49),
           inputFields: [
@@ -76,6 +77,7 @@ class HouseholdServicesOngoingMonitoring {
           ]),
       FormSection(
           name: 'DOMAIN STABLE',
+          translatedName: 'BOTSITSO',
           color: Color(0xFF0000FF),
           borderColor: Color(0xFF0000FF),
           inputFields: [
@@ -126,6 +128,7 @@ class HouseholdServicesOngoingMonitoring {
           ]),
       FormSection(
           name: 'DOMAIN SAFE',
+          translatedName: 'TSIRELETSO',
           color: Color(0xFF0F9587),
           borderColor: Color(0xFF0F9587),
           inputFields: [
@@ -140,6 +143,13 @@ class HouseholdServicesOngoingMonitoring {
                 id: 'es23GNgSa7N',
                 name: 'VAC Service progress',
                 translatedName: 'Tsoelo-pele ea litšebeletso tsa VAC',
+                valueType: 'TEXT',
+                inputColor: Color(0xFF0F9587),
+                labelColor: Color(0xFF737373)),
+            InputField(
+                id: 'x3FxC6Bw139',
+                name: 'VAC Legal Messaging progress',
+                translatedName: 'Tsoelo-pele ea litšebeletso tsa VAC Legal Messaging',
                 valueType: 'TEXT',
                 inputColor: Color(0xFF0F9587),
                 labelColor: Color(0xFF737373)),
@@ -181,6 +191,7 @@ class HouseholdServicesOngoingMonitoring {
           ]),
       FormSection(
           name: 'DOMAIN SCHOOLED',
+          translatedName:'TSA SEKOLO',
           color: Color(0xFF9B2BAE),
           borderColor: Color(0xFF9B2BAE),
           inputFields: [

@@ -8,7 +8,6 @@ class NoneAgywEnrollmentFormSection {
     return [
       'sJ35hsF6Lf9',
       'z9hUdWsyBXB',
-      'sJ35hsF6Lf9',
       'location',
       'WTZ7GLTrE8Q',
       'rSP9c21JsfC',
@@ -264,6 +263,8 @@ class NoneAgywEnrollmentFormSection {
               InputFieldOption(
                   code: 'aayhISGUuut',
                   name: 'I Worried abut my partner’s behaviour/status'),
+              InputFieldOption(
+                  code: 'lsFT00D6nOV', name: 'I Have multiple partners.'),
               InputFieldOption(code: 'Wfnk8y9jxPA', name: 'My Partner is sick'),
               InputFieldOption(
                   code: 'jq8Lwo7mmKB',
@@ -833,14 +834,13 @@ class NoneAgywEnrollmentFormSection {
               labelColor: Color(0xFF737373),
             ),
             InputField(
-              id: 'rBktFvgfp52',
-              name:
-                  'Client has requested PrEP and has received information on PrEP including which people would benefit from PrEP and client still feels they would benefit from PrEP',
-              valueType: 'TRUE_ONLY',
-              inputColor: Color(0xFF258DCC),
-              labelColor: Color(0xFF737373),
-            ),
-          ])
+                id: 'rBktFvgfp52',
+                name:
+                    'Client has requested PrEP and has received information on PrEP including which people would benefit from PrEP and client still feels they would benefit from PrEP',
+                valueType: 'TRUE_ONLY',
+                inputColor: Color(0xFF258DCC),
+                labelColor: Color(0xFF737373)),
+          ]),
     ];
   }
 }

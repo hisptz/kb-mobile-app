@@ -162,8 +162,7 @@ class ClientInformation {
                       code: 'Assist/ Sentebale', name: 'Assist/ Sentebale'),
                   InputFieldOption(code: 'IPC', name: 'IPC'),
                   InputFieldOption(code: 'M2M', name: 'M2M'),
-                  InputFieldOption(
-                      code: 'CRS or Caritas', name: 'CRS or KB'),
+                  InputFieldOption(code: 'CRS or Caritas', name: 'CRS or KB'),
                   InputFieldOption(code: 'Promo', name: 'Promo'),
                   InputFieldOption(code: 'WVI', name: 'WVI'),
                   InputFieldOption(
@@ -183,16 +182,6 @@ class ClientInformation {
                 inputColor: Color(0xFF258DCC),
                 labelColor: Color(0xFF737373),
                 options: [
-                  InputFieldOption(
-                      code: 'Primary level', name: 'Primary level'),
-                  InputFieldOption(
-                      code: 'Secondary level', name: 'Secondary level'),
-                  InputFieldOption(
-                      code: 'Tertiary level',
-                      name: 'Tertiary level (college/university)'),
-                  InputFieldOption(
-                      code: 'Vocational level', name: 'Vocational level'),
-                  InputFieldOption(code: 'Other', name: 'Other'),
                   InputFieldOption(code: 'None', name: 'None'),
                   InputFieldOption(code: 'Primary', name: 'Primary'),
                   InputFieldOption(code: 'High school', name: 'High school'),
@@ -505,30 +494,6 @@ class ClientInformation {
             id: 'rvanxUEglQu',
             name: 'Name of referral DNA PCR or ART facility',
             valueType: 'TRUE_ONLY',
-            inputColor: Color(0xFF258DCC),
-            labelColor: Color(0xFF737373)),
-        InputField(
-            id: 'YstOYReVQSu',
-            name: 'STI Dx/TX referral given to client',
-            valueType: 'TRUE_ONLY',
-            inputColor: Color(0xFF258DCC),
-            labelColor: Color(0xFF737373)),
-        InputField(
-            id: 'HPzl16DToJQ',
-            name: 'TB Dx/Tx referral given to client',
-            valueType: 'TRUE_ONLY',
-            inputColor: Color(0xFF258DCC),
-            labelColor: Color(0xFF737373)),
-        InputField(
-            id: 'DGxRatLifox',
-            name: 'VMMC referral given to client',
-            valueType: 'TRUE_ONLY',
-            inputColor: Color(0xFF258DCC),
-            labelColor: Color(0xFF737373)),
-        InputField(
-            id: 'rvanxUEglQu',
-            name: 'Name of referral DNA PCR or ART facility',
-            valueType: 'ORGANISATION_UNIT',
             inputColor: Color(0xFF258DCC),
             labelColor: Color(0xFF737373)),
         InputField(

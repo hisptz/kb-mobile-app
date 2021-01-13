@@ -16,11 +16,9 @@ import 'package:kb_mobile_app/models/intervention_card.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/components/dream_beneficiary_top_header.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/hts/pages/agyw_dreams_hts_consent_subpart_form.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/prep/constants/prep_intake_constant.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/prep/pages/agyw_dreams_prep_form.dart';
 import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/components/prep_visit_card.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/none_agyw/constant/non_agyw_prep_visit_constant.dart';
-import 'package:kb_mobile_app/modules/dreams_intervention/submodules/none_agyw/sub_pages/none_agyw_prep/pages/none_agyw_prep_form.dart';
 import 'package:kb_mobile_app/core/components/entry_form_save_button.dart';
+import 'package:kb_mobile_app/modules/dreams_intervention/submodules/dreams_services/sub_modules/prep/pages/agyw_prep_visit_form.dart';
 import 'package:provider/provider.dart';
 
 class AgywDreamsPrep extends StatefulWidget {
@@ -33,7 +31,7 @@ class AgywDreamsPrep extends StatefulWidget {
 class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
   final String label = 'AGYW Prep';
   List<String> programStageids = [PrepIntakeConstant.programStage];
-  List<String> nonAgywprogramStageids = [NonAgywPrepVisitConstant.programStage];
+  List<String> visitProgramStageIds = [PrepIntakeConstant.prepVisitProgramStage];
 
   @override
   void initState() {
@@ -68,7 +66,7 @@ class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
         .setCurrentAgywDream(agywDream);
     if (int.parse(agywDream.age) >= 15 && int.parse(agywDream.age) <= 24) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => AgywDreamsPrepFormPage()));
+          MaterialPageRoute(builder: (context) => AgywPrepVisitForm()));
     } else {
       AppUtil.showToastMessage(
           message: 'PrEP is restricted to beneficiaries from 15-24 years only',
@@ -79,13 +77,13 @@ class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
   void onViewPrep(BuildContext context, Events eventdata) {
     updateFormState(context, false, eventdata);
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AgywDreamsPrepFormPage()));
+        MaterialPageRoute(builder: (context) => AgywPrepVisitForm()));
   }
 
   void onEditPrep(BuildContext context, Events eventdata) {
     updateFormState(context, true, eventdata);
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AgywDreamsPrepFormPage()));
+        MaterialPageRoute(builder: (context) => AgywPrepVisitForm()));
   }
 
   void onAddVisit(BuildContext context, AgywDream agywDream) {
@@ -94,7 +92,7 @@ class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
         .setCurrentAgywDream(agywDream);
     if (int.parse(agywDream.age) >= 15 && int.parse(agywDream.age) <= 24) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => NoneAgywPrepForm()));
+          context, MaterialPageRoute(builder: (context) => AgywPrepVisitForm()));
     } else {
       AppUtil.showToastMessage(
           message: 'PrEP is restricted to beneficiaries from 15-24 years only',
@@ -105,13 +103,13 @@ class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
   void onViewVisit(BuildContext context, Events eventdata) {
     updateFormState(context, false, eventdata);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => NoneAgywPrepForm()));
+        context, MaterialPageRoute(builder: (context) => AgywPrepVisitForm()));
   }
 
   void onEditVisit(BuildContext context, Events eventdata) {
     updateFormState(context, true, eventdata);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => NoneAgywPrepForm()));
+        context, MaterialPageRoute(builder: (context) => AgywPrepVisitForm()));
   }
 
   bool isPrepProgramStopped(List<Events> events, List<Events> visits) {
@@ -176,12 +174,12 @@ class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
 
                     List<Events> visits = TrackedEntityInstanceUtil
                         .getAllEventListFromServiceDataState(
-                            eventListByProgramStage, nonAgywprogramStageids);
+                            eventListByProgramStage, visitProgramStageIds);
                     Events lastVisit = visits != null && visits.length > 0
                         ? visits.last
                         : null;
-                    int referralIndex = events.length + 1;
-                    int visitsReferralIndex = 0;
+                    int referralIndex = events.length;
+                    int visitReferralIndex = visits.length;
                     return Container(
                       child: Column(
                         children: [
@@ -279,8 +277,7 @@ class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
                                                             children: visits
                                                                 .map((Events
                                                                     eventData) {
-                                                              visitsReferralIndex++;
-
+                                                              int count = visitReferralIndex--;
                                                               return Container(
                                                                 margin:
                                                                     EdgeInsets
@@ -302,12 +299,9 @@ class _AgywDreamsPrepState extends State<AgywDreamsPrep> {
                                                                   eventData:
                                                                       eventData,
                                                                   visitCount:
-                                                                      visitsReferralIndex,
+                                                                      count,
                                                                   editDisabled:
-                                                                      lastVisit ==
-                                                                              eventData
-                                                                          ? false
-                                                                          : true,
+                                                                      !(visits.first == eventData)
                                                                 ),
                                                               );
                                                             }).toList(),

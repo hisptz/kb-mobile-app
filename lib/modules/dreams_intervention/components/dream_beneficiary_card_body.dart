@@ -41,8 +41,8 @@ class DreamBeneficiaryCardBody extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: VerticalRowCardData(
-                          label: 'Beneficary id',
-                          value: agywBeneficiary.benefecaryId,
+                          label: 'Primary UIC',
+                          value: agywBeneficiary.primaryUIC,
                           labelColor: labelColor,
                           valueColor: valueColor,
                         ),
@@ -198,6 +198,11 @@ class DreamBeneficiaryCardBody extends StatelessWidget {
         {'name': 'VAC LEGAL', 'programStage': 'bDJq2JWVTbC'},
         {'name': 'HIV & VIOLENCE PREVENTION', 'programStage': 'bDJq2JWVTbC'},
       ],
+      [
+        {'name': 'VAC LEGAL MESSAGING', 'programStage': 'bDJq2JWVTbC'},
+        {'name': ''},
+        {'name': ''},
+      ]
     ];
   }
 }

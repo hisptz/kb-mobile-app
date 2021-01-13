@@ -78,7 +78,6 @@ class CurrentUserState with ChangeNotifier {
       _canManageMSGHIV = true;
       _canManageMSGHIV = true;
       _canManageCondom = true;
-      _canManagePEP = true;
     }
     if (implementingPartner == 'EGPAF') {
       _canManageDreams = true;
@@ -103,7 +102,6 @@ class CurrentUserState with ChangeNotifier {
       _canManageOGAC = true;
       _canManageReferral = true;
       _canManageCLOReferral = true;
-      _canManageServiceForm = true;
     }
     if (implementingPartner == 'KB-AGYW/DREAMS') {
       _canManageDreams = true;
@@ -122,6 +120,12 @@ class CurrentUserState with ChangeNotifier {
       _canManageReferral = true;
       _canManageCLOReferral = true;
       _isCloManager = true;
+    }
+    if (implementingPartner == "Paralegal") {
+      _canManageOvc = true;
+      _canManageDreams = true;
+      _canManageReferral = true;
+      _canManageServiceForm = true;
     }
   }
 

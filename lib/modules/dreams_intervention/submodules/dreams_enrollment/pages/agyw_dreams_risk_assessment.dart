@@ -83,6 +83,10 @@ class _AgywDreamServiceFormState extends State<AgywDreamServiceForm> {
   void onInputValueChange(String id, dynamic value) {
     Provider.of<EnrollmentFormState>(context, listen: false)
         .setFormFieldState(id, value);
+     if (id == 'ls9hlz2tyol') {
+      Provider.of<EnrollmentFormState>(context, listen: false)
+          .removeFieldFromState('UzQ533pOnvt');
+    }
     evaluateSkipLogics();
   }
 
@@ -131,6 +135,9 @@ class _AgywDreamServiceFormState extends State<AgywDreamServiceForm> {
                                           enrollmentFormState.hiddenFields,
                                       hiddenSections:
                                           enrollmentFormState.hiddenSections,
+                                      hiddenInputFieldOptions:
+                                          enrollmentFormState
+                                              .hiddenInputFieldOptions,
                                       formSections: formSections,
                                       mandatoryFieldObject:
                                           mandatoryFieldObject,

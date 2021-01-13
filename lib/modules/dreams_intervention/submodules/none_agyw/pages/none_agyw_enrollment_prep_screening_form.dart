@@ -98,7 +98,7 @@ class _NoneAgywEnrollmentPrepScreeningFormState
         hiddenFields,
       );
       Provider.of<DreamsInterventionListState>(context, listen: false)
-          .refreshDreamsList();
+          .onNonAgywBeneficiaryAdd();
       Timer(
         Duration(seconds: 1),
         () {
@@ -186,7 +186,8 @@ class _NoneAgywEnrollmentPrepScreeningFormState
                               ),
                             ),
                             EntryFormSaveButton(
-                              label: currentLanguage == 'lesotho'
+                              label: isSaving ? 'Saving...' :
+                              currentLanguage == 'lesotho'
                                   ? 'Boloka ebe u fetela pele'
                                   : 'Save and Continue',
                               labelColor: Colors.white,

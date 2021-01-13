@@ -32,7 +32,7 @@ class AgywDreamsHTSClientInformationEdit extends StatefulWidget {
 
 class _AgywDreamsHTSClientInformationEditState
     extends State<AgywDreamsHTSClientInformationEdit> {
-  final String label = 'Client Information';
+  final String label = 'HTS Client Intake'; //Initially Client Information
   List<FormSection> formSections;
   bool isFormReady = false;
   bool isSaving = false;
@@ -61,19 +61,30 @@ class _AgywDreamsHTSClientInformationEditState
       });
       String eventDate = dataObject['eventDate'];
       String eventId = dataObject['eventId'];
-      // print(dataObject);
       List<String> hiddenFields = [];
       try {
         await TrackedEntityInstanceUtil.savingTrackedEntityInstanceEventData(
-            AgywDreamsHTSConstant.program,
-            AgywDreamsHTSConstant.programStage,
-            agywDream.orgUnit,
-            formSections,
-            dataObject,
-            eventDate,
-            agywDream.id,
-            eventId,
-            hiddenFields);
+          AgywDreamsHTSConstant.program,
+          AgywDreamsHTSConstant.programStage,
+          agywDream.orgUnit,
+          formSections,
+          dataObject,
+          eventDate,
+          agywDream.id,
+          eventId,
+          hiddenFields,
+        );
+        await TrackedEntityInstanceUtil.savingTrackedEntityInstanceEventData(
+          AgywDreamsHTSConstant.program,
+          AgywDreamsHTSConstant.htsRegisterProgramStage,
+          agywDream.orgUnit,
+          formSections,
+          dataObject,
+          eventDate,
+          agywDream.id,
+          eventId,
+          hiddenFields,
+        );
         Provider.of<ServiveEventDataState>(context, listen: false)
             .resetServiceEventDataState(agywDream.id);
         Timer(Duration(seconds: 1), () {

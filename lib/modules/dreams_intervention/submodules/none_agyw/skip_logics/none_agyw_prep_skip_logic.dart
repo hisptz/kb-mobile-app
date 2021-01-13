@@ -20,14 +20,27 @@ class NoneAgywPrepSkipLogic {
       inputFieldIds.add('$key');
     }
     inputFieldIds = inputFieldIds.toSet().toList();
-    // for (String inputFieldId in inputFieldIds) {
-    //   // String value = '${dataObject[inputFieldId]}';
-    // }
+    for (String inputFieldId in inputFieldIds) {
+      String value = '${dataObject[inputFieldId]}';
+      if (inputFieldId == 'oIrEIqHBvJ5' && value != 'Normal Visit') {
+        hiddenSections['PrEP_Visits'] = true;
+        hiddenFields['m0G5RLlWR9W'] = true;
+      }
+      if (inputFieldId == 'oIrEIqHBvJ5' && value != 'Case Transfer') {
+        hiddenSections['Case_transfer'] = true;
+      }
+      if (inputFieldId == 'oIrEIqHBvJ5' && value != 'Stopping PrEP') {
+        hiddenSections['Stopping_PrEP'] = true;
+      }
+    }
     for (String sectionId in hiddenSections.keys) {
-      List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
+      List<FormSection> allFormSections =
+          FormUtil.getFlattenFormSections(formSections);
+      List<String> hidddenSectionInputFieldIds = FormUtil.getFormFieldIds(allFormSections
           .where((formSection) => formSection.id == sectionId)
-          .toList());
-      for (String inputFieldId in inputFieldIds) {
+          .toList());      
+      for (String inputFieldId in hidddenSectionInputFieldIds) {
+
         hiddenFields[inputFieldId] = true;
       }
     }

@@ -32,7 +32,7 @@ class AgywDreamsEnrollmentForm extends StatefulWidget {
 
 class _AgywDreamsEnrollmentFormState extends State<AgywDreamsEnrollmentForm> {
   List<FormSection> formSections;
-  final String label = 'Enrollment Assessment';
+  final String label = 'DREAMS Enrollment Form';
   final List<String> mandatoryFields =
       AgywEnrollmentFormSection.getMandatoryField();
   final Map mandatoryFieldObject = Map();
@@ -100,7 +100,7 @@ class _AgywDreamsEnrollmentFormState extends State<AgywDreamsEnrollmentForm> {
         hiddenFields,
       );
       Provider.of<DreamsInterventionListState>(context, listen: false)
-          .refreshDreamsList();
+          .onAgywBeneficiaryAdd();
       Timer(Duration(seconds: 1), () {
         if (Navigator.canPop(context)) {
           setState(() {

@@ -8,6 +8,7 @@ class OvcServicesChildCasePlanGaps {
     return [
       FormSection(
           name: 'DOMAIN HEALTH',
+          translatedName: 'BOPHELO BO BOTLE',
           id: 'Health',
           color: Color(0xFF4D9E49),
           borderColor: Color(0xFF4D9E49),
@@ -554,7 +555,8 @@ class OvcServicesChildCasePlanGaps {
                 labelColor: Color(0xFF737373)),
             InputField(
                 id: 'JSQ3xP1NhuN',
-                name: 'Tšebeletso ea FOODPREP',
+                name: 'FOODPREP',
+                translatedName: 'Tšebeletso ea FOODPREP',
                 valueType: 'TRUE_ONLY',
                 inputColor: Color(0xFF4D9E49),
                 labelColor: Color(0xFF737373)),
@@ -678,6 +680,7 @@ class OvcServicesChildCasePlanGaps {
       FormSection(
           id: 'Stable',
           name: 'DOMAIN STABLE',
+          translatedName: 'BOTSITSO',
           color: Color(0xFF0000FF),
           borderColor: Color(0xFF0000FF),
           inputFields: [
@@ -857,7 +860,7 @@ class OvcServicesChildCasePlanGaps {
                 name: 'MARKT COOPRTVS',
                 translatedName: 'Tšebeletso a MARKT COOPRTVS',
                 valueType: 'TRUE_ONLY',
-                inputColor: Color(0xFF4D9E49),
+                inputColor: Color(0xFF0000FF),
                 labelColor: Color(0xFF737373)),
             InputField(
                 id: 'ixFuNoQKLoB',
@@ -897,6 +900,7 @@ class OvcServicesChildCasePlanGaps {
       FormSection(
           id: 'Safe',
           name: 'DOMAIN SAFE',
+          translatedName: 'TSIRELETSO',
           color: Color(0xFF0F9587),
           borderColor: Color(0xFF0F9587),
           inputFields: [
@@ -1068,6 +1072,47 @@ class OvcServicesChildCasePlanGaps {
                 allowFuturePeriod: true,
                 name: '(VAC) Projected date for completion',
                 translatedName: 'Letsatsi la VAC le tla phetheloa',
+                valueType: 'DATE',
+                inputColor: Color(0xFF0F9587),
+                labelColor: Color(0xFF737373)),
+                InputField(
+                id: 'AaqeRcyjbyS',
+                name: 'VAC Legal Messaging',
+                translatedName: 'Tšebeletso a VAC Legal Messaging',
+                valueType: 'TRUE_ONLY',
+                inputColor: Color(0xFF0F9587),
+                labelColor: Color(0xFF737373)),
+            InputField(
+                id: 'RCDsibNNIWq',
+                name: '(VAC Legal Messaging) Responsible person(Internal/External)',
+                translatedName:
+                    '(VAC Legal Messaging) Motho ea ikarabellang (ka hare ho lelapa/ka ntle ho lelapa)',
+                valueType: 'TEXT',
+                inputColor: Color(0xFF0F9587),
+                labelColor: Color(0xFF737373),
+                options: [
+                  InputFieldOption(
+                      code: 'Internal',
+                      name: 'Internal',
+                      translatedName: 'Ka hare ho lelapa'),
+                  InputFieldOption(
+                      code: 'External',
+                      name: 'External',
+                      translatedName: 'Ka ntle ho lelapa')
+                ]),
+            InputField(
+                id: 'TizNGPP6e1d',
+                name: '(VAC Legal Messaging) Name of responsible person',
+                translatedName:
+                    'Lebitso la motho ea ikarabellang bakeng sa VAC Legal Messaging',
+                valueType: 'TEXT',
+                inputColor: Color(0xFF0F9587),
+                labelColor: Color(0xFF737373)),
+            InputField(
+                id: 'A4xYu8BYOg7',
+                allowFuturePeriod: true,
+                name: '(VAC Legal Messaging) Projected date for completion',
+                translatedName: 'Letsatsi la VAC Legal Messaging le tla phetheloa',
                 valueType: 'DATE',
                 inputColor: Color(0xFF0F9587),
                 labelColor: Color(0xFF737373)),
@@ -1361,6 +1406,7 @@ class OvcServicesChildCasePlanGaps {
       FormSection(
           id: 'Schooled',
           name: 'DOMAIN SCHOOLED',
+          translatedName:'TSA SEKOLO',
           color: Color(0xFF9B2BAE),
           borderColor: Color(0xFF9B2BAE),
           inputFields: [
@@ -1715,6 +1761,7 @@ class OvcServicesChildCasePlanGaps {
             InputField(
                 id: 'ksc7ov3MihX',
                 name: 'OTHER ACTIVITIES',
+                translatedName: 'Mesebetsi e meng',
                 valueType: 'TRUE_ONLY',
                 inputColor: Color(0xFF4D9E49),
                 labelColor: Color(0xFF737373)),
@@ -1722,6 +1769,8 @@ class OvcServicesChildCasePlanGaps {
                 id: 'JJrN3c03i7f',
                 name:
                     '(Other activities) Responsible person(Internal/External)',
+                translatedName:
+                'Motho ea ikarabellang (ka hare ho lelapa/ka ntle ho lelapa) Mesebetsi e meng',
                 valueType: 'TEXT',
                 inputColor: Color(0xFF4D9E49),
                 labelColor: Color(0xFF737373),
@@ -1738,6 +1787,8 @@ class OvcServicesChildCasePlanGaps {
             InputField(
                 id: 'Mq7g4k4lk44',
                 name: '(Other activities) Name of responsible person',
+                translatedName:
+                'Lebitso la motho ea ikarabellang bakeng sa Mesebetsi e meng',
                 valueType: 'TEXT',
                 inputColor: Color(0xFF4D9E49),
                 labelColor: Color(0xFF737373)),
@@ -1745,6 +1796,7 @@ class OvcServicesChildCasePlanGaps {
                 id: 'LGsvIyYkrP8',
                 allowFuturePeriod: true,
                 name: '(Other activities) Projected date for completion',
+                translatedName: 'Letsatsi la Mesebetsi e meng le tla phetheloa',
                 valueType: 'DATE',
                 inputColor: Color(0xFF4D9E49),
                 labelColor: Color(0xFF737373)),

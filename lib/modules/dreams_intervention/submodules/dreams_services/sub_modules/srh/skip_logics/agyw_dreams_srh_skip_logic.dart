@@ -27,12 +27,15 @@ class AgywDreamsSrhSkipLogic {
         hiddenFields['kV6uCz4uLLR'] = true;
         hiddenFields['rE25suIpzDK'] = true;
       }
-      if (inputFieldId == 'rE25suIpzDK' && value != 'false') {
-        hiddenFields['UZxZebenwuv'] = true;
-        hiddenFields['aHpvyQyfyBM'] = true;
+      if (inputFieldId == 'kV6uCz4uLLR' && value != 'Positive') {
+        hiddenFields['rE25suIpzDK'] = true;
       }
       if (inputFieldId == 'rE25suIpzDK' && value != 'true') {
         hiddenFields['XdF6espdxoH'] = true;
+      }
+      if (inputFieldId == 'rE25suIpzDK' && value == 'true') {
+        hiddenFields['UZxZebenwuv'] = true;
+        hiddenFields['aHpvyQyfyBM'] = true;
       }
       if (inputFieldId == 'UZxZebenwuv' && value != 'true') {
         hiddenFields['aHpvyQyfyBM'] = true;
@@ -53,12 +56,19 @@ class AgywDreamsSrhSkipLogic {
       if (inputFieldId == 'BXW4IP4Lfe7' && value != 'Other') {
         hiddenFields['Sj45q8zEcqx'] = true;
       }
+
+      if (inputFieldId == 'fPNCS47GeqT' && value != 'Other') {
+        hiddenFields['GbYE4IUsK0T'] = true;
+      }
     }
     for (String sectionId in hiddenSections.keys) {
-      List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
+      List<FormSection> allFormSections =
+          FormUtil.getFlattenFormSections(formSections);
+      List<String> hidddenSectionInputFieldIds = FormUtil.getFormFieldIds(allFormSections
           .where((formSection) => formSection.id == sectionId)
-          .toList());
-      for (String inputFieldId in inputFieldIds) {
+          .toList());      
+      for (String inputFieldId in hidddenSectionInputFieldIds) {
+
         hiddenFields[inputFieldId] = true;
       }
     }

@@ -29,10 +29,13 @@ class AgywDreamsServiceFormSkipLogic {
     //   //  @TODO Add skip logics
     // }
     for (String sectionId in hiddenSections.keys) {
-      List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
+      List<FormSection> allFormSections =
+          FormUtil.getFlattenFormSections(formSections);
+      List<String> hidddenSectionInputFieldIds = FormUtil.getFormFieldIds(allFormSections
           .where((formSection) => formSection.id == sectionId)
-          .toList());
-      for (String inputFieldId in inputFieldIds) {
+          .toList());      
+      for (String inputFieldId in hidddenSectionInputFieldIds) {
+
         hiddenFields[inputFieldId] = true;
       }
     }
@@ -115,6 +118,8 @@ class AgywDreamsServiceFormSkipLogic {
         return (sessions + previousSession) <= 1 ? true : false;
       } else if (interventionType == 'VAC Legal') {
         return (sessions + previousSession) <= 1 ? true : false;
+      } else if (interventionType == 'VAC Legal Messaging') {
+        return true;
       }
     }
     return false;

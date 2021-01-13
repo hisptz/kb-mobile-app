@@ -40,7 +40,8 @@ class AgywDreamEnrollmentService {
             trackedEntityType,
             orgUnit,
             inputFieldIds,
-            dataObject);
+            dataObject,
+            hasBeneficiaryId: false);
     await FormUtil.savingTrackeEntityInstance(trackeEntityInstanceData);
     if (dataObject['trackedEntityInstance'] == null) {
       Enrollment enrollmentData = FormUtil.getEnrollmentPayLoad(
@@ -55,11 +56,11 @@ class AgywDreamEnrollmentService {
     }
   }
 
-  Future<List<AgywDream>> getAgywBenficiaryList() async {
+  Future<List<AgywDream>> getAgywBenficiaryList({page}) async {
     List<AgywDream> agywDreamList = [];
     try {
       List<Enrollment> enrollments =
-          await EnrollmentOfflineProvider().getEnrollements(program);
+          await EnrollmentOfflineProvider().getEnrollements(program, page: page);
       for (Enrollment enrollment in enrollments) {
         // get location
         List<OrganisationUnit> ous = await OrganisationUnitService()
@@ -79,5 +80,10 @@ class AgywDreamEnrollmentService {
       }
     } catch (e) {}
     return agywDreamList;
+  }
+
+
+  Future<int> getAgywBeneficiaryCount() async{
+    return await EnrollmentOfflineProvider().getEnrollmentsCount(program);
   }
 }

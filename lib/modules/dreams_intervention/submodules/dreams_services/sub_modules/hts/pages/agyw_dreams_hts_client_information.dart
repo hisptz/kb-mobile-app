@@ -31,7 +31,7 @@ class AgywDreamsHTSClientInformation extends StatefulWidget {
 
 class _AgywDreamsHTSClientInformationState
     extends State<AgywDreamsHTSClientInformation> {
-  final String label = 'Client Information';
+  final String label = 'HTS Client Intake'; //Initially Client Information
   List<FormSection> formSections;
   bool isFormReady = false;
   bool isSaving = false;
@@ -143,7 +143,7 @@ class _AgywDreamsHTSClientInformationState
                                     child: EntryFormSaveButton(
                                       label: isSaving
                                           ? 'Saving ...'
-                                          : 'SAVE & CONTINUE',
+                                          : 'Save and Continue',
                                       labelColor: Colors.white,
                                       buttonColor: Color(0xFF258DCC),
                                       fontSize: 15.0,

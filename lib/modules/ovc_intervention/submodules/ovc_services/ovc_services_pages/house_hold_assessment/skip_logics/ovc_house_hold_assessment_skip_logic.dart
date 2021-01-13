@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 class OvchouseHoldAssessmentSkipLogic {
   static Map hiddenFields = Map();
   static Map hiddenSections = Map();
+  static Map hiddenInputFieldOptions = Map();
 
   static Future evaluateSkipLogics(
     BuildContext context,
@@ -15,6 +16,7 @@ class OvchouseHoldAssessmentSkipLogic {
   ) async {
     hiddenFields.clear();
     hiddenSections.clear();
+    hiddenInputFieldOptions.clear();
     List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections);
     for (var key in dataObject.keys) {
       inputFieldIds.add('$key');
@@ -28,6 +30,7 @@ class OvchouseHoldAssessmentSkipLogic {
       if (inputFieldId == 'yqwX3XCGAUN' && value != 'true') {
         hiddenFields['BKDRNiyoMgV'] = true;
       }
+
       if (inputFieldId == 'p8htbyJHydl' && value != 'true') {
         hiddenFields['p8htbyJHydl_checkbox'] = true;
         hiddenFields['kFRCZNQIF51'] = true;
@@ -55,6 +58,7 @@ class OvchouseHoldAssessmentSkipLogic {
         hiddenFields['bEXtDfYHP4B'] = true;
         hiddenFields['KexFaUmJpt5'] = true;
         hiddenFields['gcW6652C8Bt'] = true;
+        hiddenFields['AccHyrWqhI0'] = true;
       }
       if (inputFieldId == 'gcW6652C8Bt' && value != 'true') {
         hiddenFields['bmJjZctbkhX'] = true;
@@ -64,6 +68,7 @@ class OvchouseHoldAssessmentSkipLogic {
       }
       if (inputFieldId == 'BvNaiaoxc6w' && value != 'true') {
         hiddenFields['Uv26fX0HQvO'] = true;
+        hiddenFields['T4grVrCVDkk'] = true;
       }
       if (inputFieldId == 'blod3xZ2dPP' && value != '1') {
         hiddenFields['ubin7MjQ5OI'] = true;
@@ -106,23 +111,62 @@ class OvchouseHoldAssessmentSkipLogic {
       if (inputFieldId == 'sLyfb45aLkl' && value != '1') {
         hiddenFields['aRNGDZcwWmS'] = true;
       }
-      if(inputFieldId =='BYZu8p33lzP' && value !='Yes'){
+      if (inputFieldId == 'BYZu8p33lzP' && value != 'Yes') {
         hiddenFields['ToWhhydys'] = true;
       }
-      if(inputFieldId == 'SLajij5j1KI' && value != 'Yes'){
+      if (inputFieldId == 'SLajij5j1KI' && value != 'Yes') {
         hiddenFields['RxvDeJX3b3k'] = true;
+      }
+
+      if (inputFieldId == 'doJJzw4NX8m' && value == 'true') {
+        hiddenFields['doJJzw4NX8m_checkbox'] = true;
+      }
+      if (inputFieldId == 'LGrG9fGZfXP' && value == 'true') {
+        hiddenFields['ZuaV20IvVV2'] = true;
+      }
+      if (inputFieldId == 'ZuaV20IvVV2') {
+        Map hiddenOptions = Map();
+        if (value == 'Regular') {
+          hiddenOptions['Sometimes a month'] = true;
+          hiddenOptions['Once a week'] = true;
+          hiddenOptions['During some seasons'] = true;
+        } else if (value == 'Irregular') {
+          hiddenOptions['Daily'] = true;
+          hiddenOptions['Fulltime'] = true;
+        } else {
+          hiddenFields['kCuxe1Psh8E'] = true;
+          hiddenFields['lnFXCB5NcYk'] = true;
+        }
+        hiddenInputFieldOptions['kCuxe1Psh8E'] = hiddenOptions;
+      }
+      if (inputFieldId == 'kCuxe1Psh8E' && value != 'Other') {
+        hiddenFields['lnFXCB5NcYk'] = true;
+      }
+      if (inputFieldId == 'JmLdZM3XYfY' && value == 'No') {
+        hiddenFields['JmLdZM3XYfY_checkbox'] = true;
+      }
+      if (inputFieldId == 'blod3xZ2dPP' && value != null && value != '0') {
+        hiddenFields['eShHDoV4ARm'] = true;
+      }
+
+      if (inputFieldId == 'iXf2St64o0a' && value == 'true') {
+        hiddenFields['JcaEaDrtOFj'] = true;
       }
     }
     for (String sectionId in hiddenSections.keys) {
-      List<String> inputFieldIds = FormUtil.getFormFieldIds(formSections
+      List<FormSection> allFormSections =
+          FormUtil.getFlattenFormSections(formSections);
+      List<String> hidddenSectionInputFieldIds = FormUtil.getFormFieldIds(allFormSections
           .where((formSection) => formSection.id == sectionId)
-          .toList());
-      for (String inputFieldId in inputFieldIds) {
+          .toList());      
+      for (String inputFieldId in hidddenSectionInputFieldIds) {
+
         hiddenFields[inputFieldId] = true;
       }
     }
     resetValuesForHiddenFields(context, hiddenFields.keys);
     resetValuesForHiddenSections(context, formSections);
+    resetValuesForHiddenInputFieldOptions(context);
   }
 
   static resetValuesForHiddenFields(BuildContext context, inputFieldIds) {
@@ -141,6 +185,13 @@ class OvchouseHoldAssessmentSkipLogic {
   ) {
     Provider.of<ServiceFormState>(context, listen: false)
         .setHiddenSections(hiddenSections);
+  }
+
+  static resetValuesForHiddenInputFieldOptions(
+    BuildContext context,
+  ) {
+    Provider.of<ServiceFormState>(context, listen: false)
+        .setHiddenInputFieldOptions(hiddenInputFieldOptions);
   }
 
   static assignInputFieldValue(
