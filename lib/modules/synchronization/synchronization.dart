@@ -16,6 +16,7 @@ import 'components/data_download_container.dart';
 
 class Synchronization extends StatefulWidget {
   Synchronization({Key key}) : super(key: key);
+
   @override
   _SynchronizationState createState() => _SynchronizationState();
 }
@@ -92,6 +93,9 @@ class _SynchronizationState extends State<Synchronization> {
               int beneficiaryCount = synchronizationState.beneficiaryCount;
               int beneficiaryServiceCount =
                   synchronizationState.beneficiaryServiceCount;
+              double profileProgress = synchronizationState.profileProgress;
+              double eventsProgress = synchronizationState.eventsProgress;
+              double overallProgress = synchronizationState.overallProgress;
               return isUnsyncedCheckingActive
                   ? Container(
                       child: CircularProcessLoader(
@@ -118,7 +122,10 @@ class _SynchronizationState extends State<Synchronization> {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 5.0),
-                            child: DataDowmloadContainer(
+                            child: DataDownloadContainer(
+                              overallProgress:overallProgress,
+                              profileProgress: profileProgress,
+                              eventsProgress: eventsProgress,
                               isDataDownloadingActive: isDataDownloadingActive,
                               isDataUploadingActive: isDataUploadingActive,
                               conflictCount: synchronizationState.conflictCount,
