@@ -354,7 +354,7 @@ class _OvcEnrollmentChildFormState extends State<OvcEnrollmentChildForm> {
                             Visibility(
                               visible: onSkipButton,
                               child: Container(
-                                child: FlatButton(
+                                child: TextButton(
                                   onPressed: () => onSkip(childMapObject),
                                   child: Text(
                                     currentLanguage == 'lesotho'

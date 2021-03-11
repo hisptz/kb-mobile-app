@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:kb_mobile_app/core/offline_db/program_ou_offline/program_ou_offline_provider.dart';
 import 'package:kb_mobile_app/core/offline_db/user_offline/user_offline_provider.dart';
 import 'package:kb_mobile_app/core/offline_db/user_offline/user_ou_offline_provider.dart';
 import 'package:kb_mobile_app/core/offline_db/user_offline/user_program_offline_provider.dart';
@@ -14,11 +15,16 @@ class UserService {
     String password,
   ) async {
     try {
-      var url =
-          'api/me.json?fields=id,name,programs,organisationUnits[id],attributeValues[value,attribute[id,name]]';
-      HttpService http =
-          new HttpService(username: username, password: password);
-      var response = await http.httpGet(url);
+      var url = 'api/me.json';
+      var queryParameters = {
+        "fields":
+            "id,name,programs,organisationUnits[id],attributeValues[value,attribute[id,name]]"
+      };
+      HttpService http = new HttpService(
+        username: username,
+        password: password,
+      );
+      var response = await http.httpGet(url, queryParameters: queryParameters);
       return response.statusCode == 200
           ? CurrentUser.fromJson(
               json.decode(response.body),
@@ -40,6 +46,7 @@ class UserService {
       user.programs = [];
       await UserOuOfflineProvider().deleteUserOrganisationUnits(user.id);
       await UserProgramOfflineProvider().deleteUserPrograms(user.id);
+      await ProgramOuOfflineProvider().clearProgramOrganisationUnits();
       await setCurrentUser(user);
     }
   }
